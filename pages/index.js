@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import cheffy from '../public/cheffy.svg'
 import backgroundPattern from '../public/vegetablepattern.jpg'
+import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 
 const Home = () => {
@@ -10,77 +11,81 @@ const Home = () => {
     setEmail(e.target.value)
   }
   return (
-    <div className='relative w-full overflow-hidden'>
-      <div className='absolute inset-0 opacity-5 aspect-square bg-repeat'>
-        <Image src={backgroundPattern} alt='background image' fill />
-      </div>
-      <div className='relative flex flex-col justify-center items-center pt-10 pb-14 sm:pt-16 lg:overflow-hidden lg:pt-24 lg:pb-24 min-h-screen'>
-        <div className='mx-auto max-w-5xl lg:px-8'>
-          <div className='lg:grid lg:grid-cols-2 lg:gap-8'>
-            <div className='mx-auto max-w-md px-4 text-center sm:max-w-2xl sm:px-6 lg:flex lg:items-center lg:px-0 lg:text-left'>
-              <div className='lg:hidden w-full h-2/6 md:h-1-4'>
-                <Image priority src={cheffy} alt='Cheffy Icon' />
-              </div>
-              <div className='lg:py-24'>
-                <h1 className='mt-4 text-4xl font-bold tracking-tight text-black sm:mt-5 sm:text-6xl lg:mt-6 xl:text-6xl'>
-                  <span className='block text-purple'>Introducing </span>
-                  <span className='block text-black'>CheffyAI</span>
-                </h1>
-                <p className='mt-3 text-base text-gray-400 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl'>
-                  Cheffy is launching soon! Join the waitlist to try the beta
-                  before it&apos;s publicly available.
-                </p>
-                <div className='mt-10 sm:mt-12'>
-                  <form
-                    className='sm:mx-auto sm:max-w-xl lg:mx-0'
-                    action='https://api.web3forms.com/submit'
-                  >
-                    <div className='sm:flex'>
-                      <input
-                        type='hidden'
-                        name='access_key'
-                        value='YOUR_ACCESS_KEy_HERE'
-                      />
-                      <input
-                        type='hidden'
-                        name='subject'
-                        value='New Waitlist'
-                      />
-                      <div className='min-w-0 flex-1'>
-                        <label htmlFor='email' className='sr-only'>
-                          Email address
-                        </label>
+    <>
+      <Navbar />
+
+      <main className='relative w-full overflow-hidden bg-white min-h-screen'>
+        <div className='absolute inset-0 opacity-5 aspect-square'>
+          <Image src={backgroundPattern} alt='background image' fill />
+        </div>
+        <div className='relative flex flex-col justify-center items-center pt-10 pb-14 sm:pt-16 lg:overflow-hidden lg:pt-24 lg:pb-24 min-h-screen'>
+          <div className='mx-auto max-w-5xl lg:px-8'>
+            <div className='lg:grid lg:grid-cols-2 lg:gap-8'>
+              <div className='mx-auto max-w-md px-4 text-center sm:max-w-2xl sm:px-6 lg:flex lg:items-center lg:px-0 lg:text-left'>
+                <div className='lg:hidden w-full h-2/6 md:h-1-4'>
+                  <Image priority src={cheffy} alt='Cheffy Icon' />
+                </div>
+                <div className='lg:py-24'>
+                  <h1 className='mt-4 text-4xl font-bold tracking-tight text-black sm:mt-5 sm:text-6xl lg:mt-6 xl:text-6xl'>
+                    <span className='block text-purple'>Introducing </span>
+                    <span className='block text-black'>CheffyAI</span>
+                  </h1>
+                  <p className='mt-3 text-base text-gray-400 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl'>
+                    Cheffy is launching soon! Join the waitlist to try the beta
+                    before it&apos;s publicly available.
+                  </p>
+                  <div className='mt-10 sm:mt-12'>
+                    <form
+                      className='sm:mx-auto sm:max-w-xl lg:mx-0'
+                      action='https://api.web3forms.com/submit'
+                    >
+                      <div className='sm:flex'>
                         <input
-                          id='email'
-                          type='email'
-                          placeholder='Enter your email'
-                          className='block w-full rounded-md border-0 bg-zinc-100 px-4 py-3 text-base text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple'
-                          value={email}
-                          onChange={handleChange}
-                          autoComplete='off'
+                          type='hidden'
+                          name='access_key'
+                          value='YOUR_ACCESS_KEy_HERE'
                         />
+                        <input
+                          type='hidden'
+                          name='subject'
+                          value='New Waitlist'
+                        />
+                        <div className='min-w-0 flex-1'>
+                          <label htmlFor='email' className='sr-only'>
+                            Email address
+                          </label>
+                          <input
+                            id='email'
+                            type='email'
+                            placeholder='Enter your email'
+                            className='block w-full rounded-md border-0 bg-zinc-100 px-4 py-3 text-base text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple'
+                            value={email}
+                            onChange={handleChange}
+                            autoComplete='off'
+                          />
+                        </div>
+                        <div className='mt-3 sm:mt-0 sm:ml-3'>
+                          <button
+                            type='submit'
+                            className='block w-full rounded-md bg-purple py-3 px-4 font-medium text-white shadow hover:bg-purpleDark focus:outline-none'
+                          >
+                            Join Waitlist
+                          </button>
+                        </div>
                       </div>
-                      <div className='mt-3 sm:mt-0 sm:ml-3'>
-                        <button
-                          type='submit'
-                          className='block w-full rounded-md bg-purple py-3 px-4 font-medium text-white shadow hover:bg-purpleDark focus:outline-none'
-                        >
-                          Join Waitlist
-                        </button>
-                      </div>
-                    </div>
-                  </form>
+                    </form>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className='mt-12 hidden lg:block'>
-              <Image priority src={cheffy} alt='Cheffy Icon' />
+              <div className='mt-12 hidden lg:block'>
+                <Image priority src={cheffy} alt='Cheffy Icon' />
+              </div>
             </div>
           </div>
+          <Footer />
         </div>
-      </div>
-      <Footer />
-    </div>
+      </main>
+    </>
   )
 }
 
