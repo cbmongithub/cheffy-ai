@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { BiFoodMenu, BiLogOut } from 'react-icons/bi'
 import { CiSettings } from 'react-icons/ci'
 import { AiOutlineUser } from 'react-icons/ai'
+import { BsChatDots } from 'react-icons/bs'
 
 const Sidebar = () => {
   return (
@@ -32,6 +33,15 @@ const Sidebar = () => {
           </li>
           <li>
             <Link
+              href='/dashboard'
+              className='flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700'
+            >
+              <BsChatDots />
+              <span className='flex-1 ml-3 whitespace-nowrap'>Chat</span>
+            </Link>
+          </li>
+          <li>
+            <Link
               href='#'
               className='flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700'
             >
@@ -42,19 +52,9 @@ const Sidebar = () => {
               </span>
             </Link>
           </li>
-
           <li>
             <Link
-              href='#'
-              className='flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700'
-            >
-              <AiOutlineUser />
-              <span className='flex-1 ml-3 whitespace-nowrap'>Profile</span>
-            </Link>
-          </li>
-          <li>
-            <Link
-              href='#'
+              href='/settings'
               className='flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700'
             >
               <CiSettings />
