@@ -145,7 +145,10 @@ const AnswerSection = ({ storedValues }) => {
                 </div>
               </div>
               <div className='flex justify-start mb-4'>
-                <div className='py-3 px-4 bg-purple rounded-lg text-white'>
+                <div
+                  className='py-3 px-4 bg-purple rounded-lg text-white'
+                  onClick={() => console.log(data.answer)}
+                >
                   {data.answer && (
                     <ReactMarkdown remarkPlugins={[remarkGfm]}>
                       {data.answer}
