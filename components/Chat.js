@@ -8,6 +8,11 @@ import remarkGfm from 'remark-gfm'
 const Chat = () => {
   const [typing, setIsTyping] = useState(false)
   const [storedValues, setStoredValues] = useLocalStorage('chat', [])
+  const [newQuestion, setNewQuestion] = useState('')
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    setNewQuestion('')
+  }
 
   const generateResponse = async (newQuestion, setNewQuestion) => {
     setIsTyping(true)
@@ -56,8 +61,8 @@ const Chat = () => {
   }
 
   return (
-    <div className='flex flex-col w-5/6 justify-top fixed top-0 right-0 min-h-screen mx-auto shadow-2xl z-40 overflow-y-scroll'>
-      <div className='flex flex-col w-full'>
+    <>
+      <div className='flex flex-row w-5/6 h-[92%] justify-top absolute top-0 right-0 mx-auto shadow-2xl'>
         <ScrollableFeed>
           <div className='flex flex-row justify-between rounded-b-md'>
             <div className='px-4 flex flex-col justify-between'>
@@ -94,8 +99,36 @@ const Chat = () => {
           </div>
         </ScrollableFeed>
       </div>
-      <FormSection generateResponse={generateResponse} />
-    </div>
+      <form
+        onSubmit={handleSubmit}
+        className='shadow-inner flex flex-row justify-between items-center fixed w-5/6 h-[15.25%] bottom-0 right-0 bg-zinc-50 px-4 z-50'
+      >
+        <input
+          className='text-base
+            w-3/4
+            font-normal
+            text-zinc-700 dark:text-zinc-200
+            bg-zinc-50 dark:bg-slate-800 bg-clip-padding
+            border border-solid border-zinc-300 dark:border-zinc-500
+            transition
+            ease-in-out
+            m-0
+              focus:border-purple-600 focus:outline-none py-4 px-4 rounded-xl'
+          placeholder='Ask Cheffy a question'
+          value={newQuestion}
+          onChange={(e) => setNewQuestion(e.target.value)}
+          type='text'
+        />
+        <button
+          type='submit'
+          aria-label='Chat submit button'
+          className='w-1/4 ml-5 py-5 rounded-xl inline-block text-md px-4 leading-none border text-white bg-purple border-purple hover:border-purpleDark hover:bg-purpleDark hover:text-white'
+          onClick={() => generateResponse(newQuestion, setNewQuestion)}
+        >
+          SEND
+        </button>
+      </form>
+    </>
   )
 }
 
@@ -131,48 +164,6 @@ const AnswerSection = ({ storedValues }) => {
           )
         })
         .reverse()}
-    </>
-  )
-}
-
-const FormSection = ({ generateResponse }) => {
-  const [newQuestion, setNewQuestion] = useState('')
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    setNewQuestion('')
-  }
-
-  return (
-    <>
-      <form
-        onSubmit={handleSubmit}
-        className='shadow-inner flex flex-row justify-between items-center rounded-b-lg fixed w-5/6 bottom-0 right-0 bg-zinc-50 dark:bg-slate-800 px-4 py-5'
-      >
-        <input
-          className='text-base
-            w-3/4
-            font-normal
-            text-zinc-700 dark:text-zinc-200
-            bg-zinc-50 dark:bg-slate-800 bg-clip-padding
-            border border-solid border-zinc-300 dark:border-zinc-500
-            transition
-            ease-in-out
-            m-0
-              focus:border-purple-600 focus:outline-none py-4 px-4 rounded-xl'
-          placeholder='Ask Cheffy a question'
-          value={newQuestion}
-          onChange={(e) => setNewQuestion(e.target.value)}
-          type='text'
-        />
-        <button
-          type='submit'
-          aria-label='Chat submit button'
-          className='w-1/4 ml-5 py-5 rounded-xl inline-block text-md px-4 leading-none border text-white bg-purple border-purple hover:border-purpleDark hover:bg-purpleDark hover:text-white'
-          onClick={() => generateResponse(newQuestion, setNewQuestion)}
-        >
-          SEND
-        </button>
-      </form>
     </>
   )
 }
