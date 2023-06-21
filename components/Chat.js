@@ -133,6 +133,24 @@ const Chat = () => {
 }
 
 const AnswerSection = ({ storedValues }) => {
+  const [saved, setSaved] = useState(false)
+  const [savedIndex, setSavedIndex] = useState()
+  const saveRecipe = async (recipe, index) => {
+    const response = await fetch('/api/saveRecipe', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        timestamp: Date.now(),
+        recipe: recipe,
+        index: index,
+      }),
+    })
+    let answer = await response.json()
+    setSaved(true)
+    setSavedIndex(answer.index)
+  }
   return (
     <>
       {storedValues
@@ -145,15 +163,20 @@ const AnswerSection = ({ storedValues }) => {
                 </div>
               </div>
               <div className='flex justify-start mb-4'>
-                <div
-                  className='py-3 px-4 bg-purple rounded-lg text-white'
-                  onClick={() => console.log(data.answer)}
-                >
+                <div className='py-3 px-4 bg-purple rounded-lg text-white'>
                   {data.answer && (
                     <ReactMarkdown remarkPlugins={[remarkGfm]}>
                       {data.answer}
                     </ReactMarkdown>
                   )}
+                  <button
+                    className='text-md my-5 bg-white px-4 rounded-lg py-1 text-purple shadow-md outline-none border-none hover:bg-purpleDark hover:text-white'
+                    onClick={() => {
+                      saveRecipe(data.answer, index)
+                    }}
+                  >
+                    {saved && index === savedIndex ? 'Saved!' : 'Save'}
+                  </button>
                 </div>
                 <Image
                   src={`${process.env.NEXT_PUBLIC_BASE_URL}/cheffyIcon.svg`}
