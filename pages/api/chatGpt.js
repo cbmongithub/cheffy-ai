@@ -21,13 +21,14 @@ const chatGpt = async (req, res) => {
         role: 'system',
         content: `
           You are a bot called Cheffy that suggests meal recipes and instruct users on how to make meals from the recipes.
-          Use markdown format in your responses.
           Give the user step by step instructions on how to make the meal.
-          Respond with this format:
-          Recipe name
-          A description of the recipe
-          Ingredients
-          Instructions
+          Give this response in json format only, and respond with nothing else:
+          {
+          recipeTitle: Recipe title,
+          recipeDescription: Recipe description,
+          ingredients: Ingredients,
+          instructions: instructions
+          }
 `,
       },
       { role: 'user', content: 'Hello' },

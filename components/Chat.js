@@ -2,8 +2,6 @@ import { useState } from 'react'
 import useLocalStorage from 'use-local-storage'
 import Image from 'next/image'
 import ScrollableFeed from 'react-scrollable-feed'
-import ReactMarkdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
 
 const Chat = () => {
   const [typing, setIsTyping] = useState(false)
@@ -27,11 +25,12 @@ const Chat = () => {
     })
 
     let answer = await response.json()
+    console.log(JSON.parse(answer.json.choices[0].message.content))
     if (answer.json.choices) {
       setStoredValues([
         {
           question: newQuestion,
-          answer: answer.json.choices[0].message.content,
+          answer: JSON.parse(answer.json.choices[0].message.content),
         },
         ...storedValues,
       ])
@@ -135,7 +134,13 @@ const Chat = () => {
 const AnswerSection = ({ storedValues }) => {
   const [saved, setSaved] = useState(false)
   const [savedIndex, setSavedIndex] = useState()
-  const saveRecipe = async (recipe, index) => {
+  const saveRecipe = async (
+    title,
+    description,
+    ingredients,
+    instructions,
+    index
+  ) => {
     const response = await fetch('/api/saveRecipe', {
       method: 'POST',
       headers: {
@@ -143,7 +148,10 @@ const AnswerSection = ({ storedValues }) => {
       },
       body: JSON.stringify({
         timestamp: Date.now(),
-        recipe: recipe,
+        title: title,
+        description: description,
+        ingredients: ingredients,
+        instructions: instructions,
         index: index,
       }),
     })
@@ -155,6 +163,7 @@ const AnswerSection = ({ storedValues }) => {
     <>
       {storedValues
         .map((data, index) => {
+          const answer = JSON.parse(data.answer)
           return (
             <div key={index}>
               <div className='flex justify-start mb-4'>
@@ -164,15 +173,24 @@ const AnswerSection = ({ storedValues }) => {
               </div>
               <div className='flex justify-start mb-4'>
                 <div className='py-3 px-4 bg-purple rounded-lg text-white'>
-                  {data.answer && (
-                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                      {data.answer}
-                    </ReactMarkdown>
-                  )}
+                  <p className='font-bold'>{answer.recipeTitle}</p>
+                  <p>{answer.recipeDescription}</p>
+                  <p className='font-bold'>Ingredients:</p>
+                  {answer.ingredients.map((ingredient, i) => {
+                    return <p key={i}>- {ingredient}</p>
+                  })}
+                  <p className='font-bold'>Instructions:</p>
+                  <p>{answer.instructions}</p>
                   <button
                     className='text-md my-5 bg-white px-4 rounded-lg py-1 text-purple shadow-md outline-none border-none hover:bg-purpleDark hover:text-white'
                     onClick={() => {
-                      saveRecipe(data.answer, index)
+                      saveRecipe(
+                        answer.recipeTitle,
+                        answer.recipeDescription,
+                        answer.ingredients,
+                        answer.instructions,
+                        index
+                      )
                     }}
                   >
                     {saved && index === savedIndex ? 'Saved!' : 'Save'}
