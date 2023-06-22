@@ -61,7 +61,7 @@ const Chat = () => {
 
   return (
     <>
-      <div className='flex flex-row w-5/6 h-[92%] justify-top absolute top-0 right-0 mx-auto shadow-2xl'>
+      <div className='flex flex-row md:w-4/6 lg:w-5/6 h-[92%] justify-top absolute top-0 right-0 mx-auto shadow-2xl'>
         <ScrollableFeed>
           <div className='flex flex-row justify-between rounded-b-md'>
             <div className='px-4 flex flex-col justify-between'>
@@ -100,7 +100,7 @@ const Chat = () => {
       </div>
       <form
         onSubmit={handleSubmit}
-        className='shadow-inner flex flex-row justify-between items-center fixed w-5/6 h-[15.25%] bottom-0 right-0 bg-zinc-50 px-4 z-50'
+        className='shadow-inner w-full flex flex-row justify-between items-center fixed md:w-4/6 lg:w-5/6 h-[15.25%] bottom-0 right-0 bg-zinc-50 px-4 z-50'
       >
         <input
           className='text-base

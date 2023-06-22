@@ -2,13 +2,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { BiFoodMenu, BiLogOut } from 'react-icons/bi'
 import { CiSettings } from 'react-icons/ci'
-import { AiOutlineUser } from 'react-icons/ai'
 import { BsChatDots } from 'react-icons/bs'
 
 const Sidebar = () => {
   return (
     <aside
-      className='fixed top-0 left-0 z-40 w-1/6 h-screen transition-transform -translate-x-full sm:translate-x-0'
+      className='fixed top-0 hidden md:block left-0 z-40 md:w-2/6 lg:w-1/6 h-screen transition-transform -translate-x-full sm:translate-x-0'
       aria-label='Sidebar'
     >
       <div className='h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800'>

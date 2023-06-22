@@ -5,8 +5,8 @@ const Recipes = ({ allRecipes }) => {
   return (
     <>
       <Sidebar />
-      <div className='w-5/6 absolute top-0 right-0 mx-auto px-12 py-16'>
-        <div className='grid gap-12 lg:grid-cols-2'>
+      <div className='xs:w-full md:w-4/6 lg:w-5/6 absolute top-0 right-0 mx-auto px-12 py-16'>
+        <div className='grid gap-12 lg:grid-cols-1'>
           {allRecipes.map((recipe, i) => {
             return (
               <Recipe
@@ -14,7 +14,9 @@ const Recipes = ({ allRecipes }) => {
                 timestamp={recipe.timestamp}
                 title={recipe.title}
                 description={recipe.description}
-                recipe={recipe.recipe}
+                ingredients={recipe.ingredients}
+                instructions={recipe.instructions}
+                index={recipe.index}
               />
             )
           })}
