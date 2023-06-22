@@ -161,53 +161,55 @@ const AnswerSection = ({ storedValues }) => {
   }
   return (
     <>
-      {storedValues
-        .map((data, index) => {
-          const answer = JSON.parse(data.answer)
-          return (
-            <div key={index}>
-              <div className='flex justify-start mb-4'>
-                <div className='py-3 px-4 bg-slate-400 dark:bg-slate-600 rounded-lg text-zinc-50'>
-                  <p className='text-md'>{data.question}</p>
+      {storedValues !== undefined &&
+        storedValues
+          .map((data, index) => {
+            const answerString = JSON.stringify(data.answer)
+            const answer = JSON.parse(answerString)
+            return (
+              <div key={index}>
+                <div className='flex justify-start mb-4'>
+                  <div className='py-3 px-4 bg-slate-400 dark:bg-slate-600 rounded-lg text-zinc-50'>
+                    <p className='text-md'>{data.question}</p>
+                  </div>
+                </div>
+                <div className='flex justify-start mb-4'>
+                  <div className='py-3 px-4 bg-purple rounded-lg text-white'>
+                    <p className='font-bold'>{answer.recipeTitle}</p>
+                    <p>{answer.recipeDescription}</p>
+                    <p className='font-bold'>Ingredients:</p>
+                    {answer.ingredients.map((ingredient, i) => {
+                      return <p key={i}>- {ingredient}</p>
+                    })}
+                    <p className='font-bold'>Instructions:</p>
+                    <p>{answer.instructions}</p>
+                    <button
+                      className='text-md my-5 bg-white px-4 rounded-lg py-1 text-purple shadow-md outline-none border-none hover:bg-purpleDark hover:text-white'
+                      onClick={() => {
+                        saveRecipe(
+                          answer.recipeTitle,
+                          answer.recipeDescription,
+                          answer.ingredients,
+                          answer.instructions,
+                          index
+                        )
+                      }}
+                    >
+                      {saved && index === savedIndex ? 'Saved!' : 'Save'}
+                    </button>
+                  </div>
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_BASE_URL}/cheffyIcon.svg`}
+                    className='h-12 w-12'
+                    alt='Cheffy Icon'
+                    width={100}
+                    height={100}
+                  />
                 </div>
               </div>
-              <div className='flex justify-start mb-4'>
-                <div className='py-3 px-4 bg-purple rounded-lg text-white'>
-                  <p className='font-bold'>{answer.recipeTitle}</p>
-                  <p>{answer.recipeDescription}</p>
-                  <p className='font-bold'>Ingredients:</p>
-                  {answer.ingredients.map((ingredient, i) => {
-                    return <p key={i}>- {ingredient}</p>
-                  })}
-                  <p className='font-bold'>Instructions:</p>
-                  <p>{answer.instructions}</p>
-                  <button
-                    className='text-md my-5 bg-white px-4 rounded-lg py-1 text-purple shadow-md outline-none border-none hover:bg-purpleDark hover:text-white'
-                    onClick={() => {
-                      saveRecipe(
-                        answer.recipeTitle,
-                        answer.recipeDescription,
-                        answer.ingredients,
-                        answer.instructions,
-                        index
-                      )
-                    }}
-                  >
-                    {saved && index === savedIndex ? 'Saved!' : 'Save'}
-                  </button>
-                </div>
-                <Image
-                  src={`${process.env.NEXT_PUBLIC_BASE_URL}/cheffyIcon.svg`}
-                  className='h-12 w-12'
-                  alt='Cheffy Icon'
-                  width={100}
-                  height={100}
-                />
-              </div>
-            </div>
-          )
-        })
-        .reverse()}
+            )
+          })
+          .reverse()}
     </>
   )
 }
