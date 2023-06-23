@@ -62,10 +62,10 @@ const Chat = () => {
 
   return (
     <>
-      <Sidebar chatPage={true} />
-      <div className='flex flex-row md:w-4/6 lg:w-5/6 h-[92%] absolute top-0 right-0 mx-auto shadow-2xl'>
-        <ScrollableFeed>
-          <div className='flex flex-row justify-between rounded-b-md mt-[100px] md:mt-0'>
+      <Sidebar />
+      <div className='flex flex-row md:w-4/6 lg:w-5/6 h-[87%] md:h-[92%] absolute top-0 right-0 mx-auto shadow-2xl'>
+        <ScrollableFeed className='mt-[89px] md:mt-0 md:pb-0'>
+          <div className='flex flex-row justify-between rounded-b-md md:mt-0'>
             <div className='px-4 flex flex-col justify-between'>
               <div className='flex flex-col mt-5'>
                 <div className='flex justify-start mb-4'>

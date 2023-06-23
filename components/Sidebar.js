@@ -10,9 +10,7 @@ const Sidebar = ({ chatPage }) => {
   return (
     <>
       <nav
-        className={`bg-purple absolute z-10 w-full top-0  ${
-          chatPage ? 'right-4' : 'right-0'
-        } shadow-lg md:hidden`}
+        className={`bg-purple absolute z-10 w-full top-0 right-0 shadow-lg md:hidden`}
       >
         <div className='w-full flex flex-wrap items-center justify-between mx-auto p-4'>
           <a href='#' className='flex items-center'>
