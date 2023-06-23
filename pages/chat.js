@@ -94,6 +94,13 @@ const Chat = () => {
                     <div className='typing-indicator-dot'></div>
                     <div className='typing-indicator-dot'></div>
                   </div>
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_BASE_URL}/cheffyIcon.svg`}
+                    className='h-12 w-12 m-1'
+                    alt='Cheffy Icon'
+                    width={100}
+                    height={100}
+                  />
                 </div>
               )}
             </div>
