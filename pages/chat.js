@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Sidebar from '@/components/Sidebar'
 import useLocalStorage from 'use-local-storage'
 import Image from 'next/image'
 import ScrollableFeed from 'react-scrollable-feed'
@@ -61,9 +62,10 @@ const Chat = () => {
 
   return (
     <>
-      <div className='flex flex-row md:w-4/6 lg:w-5/6 h-[92%] justify-top absolute top-0 right-0 mx-auto shadow-2xl'>
+      <Sidebar chatPage={true} />
+      <div className='flex flex-row md:w-4/6 lg:w-5/6 h-[92%] absolute top-0 right-0 mx-auto shadow-2xl'>
         <ScrollableFeed>
-          <div className='flex flex-row justify-between rounded-b-md'>
+          <div className='flex flex-row justify-between rounded-b-md mt-[100px] md:mt-0'>
             <div className='px-4 flex flex-col justify-between'>
               <div className='flex flex-col mt-5'>
                 <div className='flex justify-start mb-4'>
@@ -100,7 +102,7 @@ const Chat = () => {
       </div>
       <form
         onSubmit={handleSubmit}
-        className='shadow-inner w-full flex flex-row justify-between items-center fixed md:w-4/6 lg:w-5/6 h-[15.25%] bottom-0 right-0 bg-zinc-50 px-4 z-50'
+        className='shadow-inner w-full flex flex-row justify-between items-center fixed md:w-4/6 lg:w-5/6 h-[15.25%] bottom-0 right-0 bg-zinc-50 px-4'
       >
         <input
           className='text-base

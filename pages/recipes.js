@@ -5,7 +5,7 @@ const Recipes = ({ allRecipes }) => {
   return (
     <>
       <Sidebar />
-      <div className='xs:w-full md:w-4/6 lg:w-5/6 absolute top-0 right-0 mx-auto px-12 py-16'>
+      <div className='mt-[100px] md:mt-0 w-full md:w-4/6 lg:w-5/6 absolute top-0 right-0 mx-auto px-12 py-16'>
         <div className='grid gap-12 lg:grid-cols-1'>
           {allRecipes.map((recipe, i) => {
             return (

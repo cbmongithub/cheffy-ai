@@ -4,8 +4,8 @@ const Settings = () => {
   return (
     <>
       <Sidebar />
-      <div className='flex flex-row justify-top fixed top-0 right-0 w-5/6 mx-auto mt-36 '>
-        <div className='inputs w-full max-w-2xl p-6 mx-auto bg-white rounded-lg shadow-2xl'>
+      <div className='mt-[100px] md:mt-0 py-16 w-full md:w-4/6 flex flex-row justify-center items-center md:fixed md:top-0 md:right-0 lg:w-5/6'>
+        <div className='w-5/6 md:w-4/6 p-6 mx-auto bg-white rounded-lg shadow-2xl'>
           <h2 className='text-2xl text-zinc-900'>Account Settings</h2>
           <form className='mt-6 border-t border-zinc-400 pt-4'>
             <div className='flex flex-wrap -mx-3 mb-6'>
