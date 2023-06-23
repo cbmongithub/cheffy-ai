@@ -56,17 +56,12 @@ const Navbar = () => {
           <ul className='flex flex-col justify-center items-center p-4 md:p-0 mt-4 font-medium rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0  dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700'>
             <li className='hover:bg-purpleDark rounded-lg w-full text-center'>
               <a href='#' className='block py-2 pl-3 pr-4 text-white'>
-                Home
-              </a>
-            </li>
-            <li className='hover:bg-purpleDark rounded-lg w-full text-center'>
-              <a href='#' className='block py-2 pl-3 pr-4 text-white'>
                 About
               </a>
             </li>
             <li className='hover:bg-purpleDark rounded-lg w-full text-center'>
               <a href='#' className='block py-2 pl-3 pr-4 text-white'>
-                Services
+                Pricing
               </a>
             </li>
             <li className='hover:bg-purpleDark rounded-lg w-full text-center'>
