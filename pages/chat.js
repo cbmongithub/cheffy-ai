@@ -134,7 +134,7 @@ const Chat = () => {
             ease-in-out
             m-0
               focus:border-purple-600 focus:outline-none py-4 px-4 rounded-xl'
-          placeholder='Ask Cheffy a question'
+          placeholder='Ask me for any recipe'
           value={newQuestion}
           onChange={(e) => setNewQuestion(e.target.value)}
           type='text'
