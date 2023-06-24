@@ -5,6 +5,7 @@ import Link from 'next/link'
 
 const Navbar = () => {
   const { data: session } = useSession()
+  console.log(session)
   const [show, setShow] = useState(false)
   return (
     <nav className='bg-purple fixed w-full z-50 shadow-lg top-0 left-0'>

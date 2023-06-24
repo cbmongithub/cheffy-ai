@@ -27,15 +27,13 @@ const Sidebar = () => {
             </span>
           </a>
           <div className='flex md:hidden'>
-            <Link href='/'>
-              <button
-                type='button'
-                className='text-white bg-purpleDark hover:text-purple hover:bg-white focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center mr-4'
-                onClick={() => signOut('github')}
-              >
-                Logout
-              </button>
-            </Link>
+            <button
+              type='button'
+              className='text-white bg-purpleDark hover:text-purple hover:bg-white focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center mr-4'
+              onClick={() => signOut('github')}
+            >
+              Logout
+            </button>
             <button
               type='button'
               className='inline-flex items-center p-2 text-sm rounded-lg md:hidden hover:bg-purpleDark focus:outline-none'
@@ -140,7 +138,8 @@ const Sidebar = () => {
             </li>
             <li>
               <Link
-                href='/'
+                href='#'
+                onClick={() => signOut('github')}
                 className='flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700'
               >
                 <BiLogOut />

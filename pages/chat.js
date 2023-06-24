@@ -35,7 +35,6 @@ const Chat = () => {
     })
 
     let answer = await response.json()
-    console.log(JSON.parse(answer.json.choices[0].message.content))
     if (answer.json.choices) {
       setStoredValues([
         {
@@ -133,7 +132,7 @@ const Chat = () => {
             transition
             ease-in-out
             m-0
-              focus:border-purple-600 focus:outline-none py-4 px-4 rounded-xl'
+              focus:border-purple focus:outline-none py-4 px-4 rounded-xl'
           placeholder='Ask me for any recipe'
           value={newQuestion}
           onChange={(e) => setNewQuestion(e.target.value)}
