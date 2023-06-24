@@ -1,7 +1,16 @@
+import { useEffect } from 'react'
+import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
 import Sidebar from '@/components/Sidebar'
 import Recipe from '@/components/Recipe'
 
 const Recipes = ({ allRecipes }) => {
+  const { data: session } = useSession()
+  const router = useRouter()
+
+  useEffect(() => {
+    !session ? router.push('/login') : null
+  }, [session, router])
   return (
     <>
       <Sidebar />

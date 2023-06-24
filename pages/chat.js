@@ -1,13 +1,22 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
 import Sidebar from '@/components/Sidebar'
 import useLocalStorage from 'use-local-storage'
 import Image from 'next/image'
 import ScrollableFeed from 'react-scrollable-feed'
 
 const Chat = () => {
+  const { data: session } = useSession()
+  const router = useRouter()
   const [typing, setIsTyping] = useState(false)
   const [storedValues, setStoredValues] = useLocalStorage('chat', [])
   const [newQuestion, setNewQuestion] = useState('')
+
+  useEffect(() => {
+    !session ? router.push('/login') : session
+  }, [session, router])
+
   const handleSubmit = (e) => {
     e.preventDefault()
     setNewQuestion('')
@@ -71,8 +80,11 @@ const Chat = () => {
                 <div className='flex justify-start mb-4'>
                   <div className='py-3 px-4 bg-purple rounded-lg text-white'>
                     <p className='text-md'>
-                      Welcome! I am Cheffy! Would you like me to give you ideas
-                      for your next meal?
+                      Welcome,{' '}
+                      {session &&
+                        session.user.name.split(' ').slice(0, -1).join(' ')}
+                      ! I am Cheffy. My job is to provide you with any recipe
+                      that you want. What are you in the mood for?
                     </p>
                   </div>
                   <Image
@@ -143,6 +155,17 @@ const Chat = () => {
 const AnswerSection = ({ storedValues }) => {
   const [saved, setSaved] = useState(false)
   const [savedIndex, setSavedIndex] = useState()
+  const generateFirstLine = (recipe) => {
+    const firstLine = [
+      `Here is a recipe for ${recipe}`,
+      `Nice choice! Here's one recipe I know for ${recipe}`,
+      `This sounds yummy. Here is a recipe for ${recipe}`,
+      `I personally love ${recipe}, it's the best! Here is the best recipe I know`,
+    ]
+    const randomIndex = Math.floor(Math.random() * firstLine.length)
+    return firstLine[randomIndex]
+  }
+
   const saveRecipe = async (
     title,
     description,
@@ -184,14 +207,21 @@ const AnswerSection = ({ storedValues }) => {
                 </div>
                 <div className='flex justify-start mb-4'>
                   <div className='py-3 px-4 bg-purple rounded-lg text-white'>
+                    <p>
+                      {generateFirstLine(answer.recipeTitle.toLowerCase())}:
+                    </p>
+                    <br />
                     <p className='font-bold'>{answer.recipeTitle}</p>
                     <p>{answer.recipeDescription}</p>
+                    <br />
                     <p className='font-bold'>Ingredients:</p>
                     {answer.ingredients.map((ingredient, i) => {
                       return <p key={i}>- {ingredient}</p>
                     })}
+                    <br />
                     <p className='font-bold'>Instructions:</p>
                     <p>{answer.instructions}</p>
+                    <br />
                     <button
                       className='text-md my-5 bg-white px-4 rounded-lg py-1 text-purple shadow-md outline-none border-none hover:bg-purpleDark hover:text-white'
                       onClick={() => {

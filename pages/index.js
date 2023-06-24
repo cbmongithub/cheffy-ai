@@ -13,7 +13,6 @@ const Home = () => {
   return (
     <>
       <Navbar />
-
       <main className='relative w-full overflow-hidden bg-white min-h-screen'>
         <div className='absolute inset-0 opacity-5 aspect-square'>
           <Image src={backgroundPattern} alt='background image' fill />

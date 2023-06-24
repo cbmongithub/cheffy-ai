@@ -35,7 +35,7 @@ const chatGpt = async (req, res) => {
       {
         role: 'assistant',
         content:
-          'Welcome! I am Cheffy! Would you like me to give you ideas for your next meal?',
+          'Welcome! I am Cheffy. My job is to provide you with any recipe that you want. What are you in the mood for?',
       },
       {
         role: 'user',
