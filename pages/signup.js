@@ -38,7 +38,7 @@ const Signup = () => {
       </div>
       <div className='flex flex-col relative z-50 items-center justify-center min-h-screen px-6 py-8 mx-auto lg:py-0'>
         <div className='flex flex-col justify-center items-center'>
-          <Link href='#' className='flex items-center'>
+          <Link href='/' className='flex items-center'>
             <Image
               src={`${process.env.NEXT_PUBLIC_BASE_URL}/cheffyIcon.svg`}
               className='h-32 w-32'
