@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useSession, signIn } from 'next-auth/react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import backgroundPattern from '../public/vegetablepattern.jpg'
 
@@ -13,13 +14,13 @@ const Login = () => {
   }, [session, router])
 
   return (
-    <main className='relative w-full overflow-hidden bg-white min-h-screen'>
+    <main className='relative w-full overflow-hidden bg-zinc-50 min-h-screen'>
       <div className='absolute inset-0 opacity-5 aspect-square'>
         <Image src={backgroundPattern} alt='background image' fill />
       </div>
       <div className='flex flex-col relative z-50 items-center justify-center min-h-screen px-6 py-8 mx-auto lg:py-0'>
         <div className='flex flex-col justify-center items-center'>
-          <a href='#' className='flex items-center'>
+          <Link href='/' className='flex items-center'>
             <Image
               src={`${process.env.NEXT_PUBLIC_BASE_URL}/cheffyIcon.svg`}
               className='h-32 w-32'
@@ -27,7 +28,7 @@ const Login = () => {
               width={100}
               height={100}
             />
-          </a>
+          </Link>
           <p className='-mt-5 mb-16 font-semibold text-xl tracking-tight text-zinc-900'>
             CheffyAI
           </p>
@@ -41,7 +42,7 @@ const Login = () => {
               <button
                 onClick={() => signIn('github')}
                 type='button'
-                className='text-white w-auto bg-purple hover:bg-purpleDark focus:ring-0 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center'
+                className='text-white hover:shadow-lg w-auto bg-purple hover:bg-purpleDark focus:ring-0 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center'
               >
                 <svg
                   className='w-4 h-4 mr-2 -ml-1'
@@ -60,13 +61,14 @@ const Login = () => {
                 </svg>
                 Login with Github
               </button>
+
               <button
-                onClick={() => signIn('facebook')}
+                onClick={() => signIn('google')}
                 type='button'
-                className='text-white w-auto bg-blue-500 hover:bg-blue-700 focus:ring-0 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center'
+                className='text-white hover:shadow-lg w-auto bg-sky-600 hover:bg-sky-700 focus:ring-0 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center'
               >
                 <svg
-                  className='w-4 h-4 mr-2 -ml-1 mt-[3px]'
+                  className='w-5 h-5 mr-2'
                   xmlns='http://www.w3.org/2000/svg'
                   width='24'
                   height='24'
@@ -74,25 +76,24 @@ const Login = () => {
                 >
                   <path
                     fill='currentColor'
-                    d='M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm3 8h-1.35c-.538 0-.65.221-.65.778v1.222h2l-.209 2h-1.791v7h-3v-7h-2v-2h2v-2.308c0-1.769.931-2.692 3.029-2.692h1.971v3z'
+                    d='M7 11v2.4h3.97c-.16 1.029-1.2 3.02-3.97 3.02-2.39 0-4.34-1.979-4.34-4.42 0-2.44 1.95-4.42 4.34-4.42 1.36 0 2.27.58 2.79 1.08l1.9-1.83c-1.22-1.14-2.8-1.83-4.69-1.83-3.87 0-7 3.13-7 7s3.13 7 7 7c4.04 0 6.721-2.84 6.721-6.84 0-.46-.051-.81-.111-1.16h-6.61zm0 0 17 2h-3v3h-2v-3h-3v-2h3v-3h2v3h3v2z'
                   />
                 </svg>
-                Login with Facebook
+                Login with Google
               </button>
             </div>
             <hr />
-            <form className='space-y-4 md:space-y-6' action='#'>
+            <form className='space-y-4 md:space-y-6'>
               <div>
                 <label
                   htmlFor='email'
                   className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
                 >
-                  Your email
+                  Email
                 </label>
                 <input
                   type='email'
                   name='email'
-                  id='email'
                   className='text-base
                 w-full
                 font-normal
@@ -104,7 +105,6 @@ const Login = () => {
                 m-0
                   focus:border-purple focus:outline-none py-4 px-4 rounded-xl'
                   placeholder='email@example.com'
-                  required=''
                 />
               </div>
               <div>
@@ -117,7 +117,6 @@ const Login = () => {
                 <input
                   type='password'
                   name='password'
-                  id='password'
                   placeholder='••••••••'
                   className='text-base
                 w-full
@@ -151,27 +150,27 @@ const Login = () => {
                     </label>
                   </div>
                 </div>
-                <a
+                <Link
                   href='#'
-                  className='text-sm font-medium text-primary-600 hover:underline dark:text-primary-500'
+                  className='text-sm font-medium text-gray-700 hover:underline'
                 >
                   Forgot password?
-                </a>
+                </Link>
               </div>
               <button
                 type='submit'
-                className='w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800'
+                className='w-full hover:shadow-lg text-white bg-purple hover:bg-purpleDark focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center'
               >
                 Sign in
               </button>
               <p className='text-sm font-light text-gray-700 dark:text-gray-400'>
                 Don&apos;t have an account yet?{' '}
-                <a
-                  href='#'
+                <Link
+                  href='/signup'
                   className='font-medium text-purple hover:underline dark:text-primary-500'
                 >
                   Sign up
-                </a>
+                </Link>
               </p>
             </form>
           </div>

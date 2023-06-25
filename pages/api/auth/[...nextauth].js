@@ -1,6 +1,6 @@
 import NextAuth from 'next-auth'
 import GithubProvider from 'next-auth/providers/github'
-import FacebookProvider from 'next-auth/providers/facebook'
+import GoogleProvider from 'next-auth/providers/google'
 
 export const authOptions = {
   providers: [
@@ -8,9 +8,9 @@ export const authOptions = {
       clientId: process.env.GITHUB_CHEFFY_ID,
       clientSecret: process.env.GITHUB_CHEFFY_SECRET,
     }),
-    FacebookProvider({
-      clientId: process.env.FACEBOOK_CHEFFY_ID,
-      clientSecret: process.env.FACEBOOK_CHEFFY_SECRET,
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CHEFFY_ID,
+      clientSecret: process.env.GOOGLE_CHEFFY_SECRET,
     }),
   ],
   callbacks: {
@@ -21,7 +21,6 @@ export const authOptions = {
       return baseUrl
     },
   },
-  secret: process.env.GITHUB_CHEFFY_SECRET,
 }
 
 export default NextAuth(authOptions)
