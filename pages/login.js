@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useSession, signIn } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -8,6 +8,23 @@ import backgroundPattern from '../public/vegetablepattern.jpg'
 const Login = () => {
   const { data: session } = useSession()
   const router = useRouter()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const handleLogin = async (e) => {
+    e.preventDefault()
+    const response = await fetch('/api/getUser', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+    })
+    let data = await response.json()
+    console.log(data)
+  }
 
   useEffect(() => {
     session ? router.push('/chat') : null
@@ -83,7 +100,7 @@ const Login = () => {
               </button>
             </div>
             <hr />
-            <form className='space-y-4 md:space-y-6'>
+            <form className='space-y-4 md:space-y-6' onSubmit={handleLogin}>
               <div>
                 <label
                   htmlFor='email'
@@ -94,6 +111,7 @@ const Login = () => {
                 <input
                   type='email'
                   name='email'
+                  onChange={(e) => setEmail(e.target.value)}
                   className='text-base
                 w-full
                 font-normal
@@ -118,6 +136,7 @@ const Login = () => {
                   type='password'
                   name='password'
                   placeholder='••••••••'
+                  onChange={(e) => setPassword(e.target.value)}
                   className='text-base
                 w-full
                 font-normal
