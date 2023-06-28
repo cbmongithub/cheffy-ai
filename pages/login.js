@@ -1,12 +1,11 @@
-import { useEffect, useState } from 'react'
-import { useSession, signIn } from 'next-auth/react'
+import { useState } from 'react'
+import { signIn } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import backgroundPattern from '../public/vegetablepattern.jpg'
 
 const Login = () => {
-  const { data: session } = useSession()
   const router = useRouter()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
