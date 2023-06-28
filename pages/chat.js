@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
-import { useRouter } from 'next/router'
 import Sidebar from '@/components/Sidebar'
 import useLocalStorage from 'use-local-storage'
 import Image from 'next/image'
@@ -8,14 +7,14 @@ import ScrollableFeed from 'react-scrollable-feed'
 
 const Chat = () => {
   const { data: session } = useSession()
-  const router = useRouter()
+  const [name, setName] = useState('')
   const [typing, setIsTyping] = useState(false)
   const [storedValues, setStoredValues] = useLocalStorage('chat', [])
   const [newQuestion, setNewQuestion] = useState('')
 
   useEffect(() => {
-    !session ? router.push('/login') : session
-  }, [session, router])
+    setName(sessionStorage.getItem('name'))
+  }, [setName])
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -80,8 +79,9 @@ const Chat = () => {
                   <div className='py-3 px-4 bg-purple rounded-lg text-white'>
                     <p className='text-md'>
                       Welcome,{' '}
-                      {session &&
-                        session.user.name.split(' ').slice(0, -1).join(' ')}
+                      {session
+                        ? session.user.name.split(' ').slice(0, -1).join(' ')
+                        : name}
                       ! I am Cheffy. My job is to provide you with any recipe
                       that you want. What are you in the mood for?
                     </p>

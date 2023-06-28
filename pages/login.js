@@ -10,6 +10,7 @@ const Login = () => {
   const router = useRouter()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [errorText, setErrorText] = useState('')
   const handleLogin = async (e) => {
     e.preventDefault()
     const response = await fetch('/api/getUser', {
@@ -23,12 +24,13 @@ const Login = () => {
       }),
     })
     let data = await response.json()
-    console.log(data)
+    if (data.data) {
+      sessionStorage.setItem('name', data.data.firstName)
+      router.push('/chat')
+    } else {
+      setErrorText(data.error)
+    }
   }
-
-  useEffect(() => {
-    session ? router.push('/chat') : null
-  }, [session, router])
 
   return (
     <main className='relative w-full overflow-hidden bg-zinc-50 min-h-screen'>
@@ -111,6 +113,7 @@ const Login = () => {
                 <input
                   type='email'
                   name='email'
+                  value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className='text-base
                 w-full
@@ -136,6 +139,7 @@ const Login = () => {
                   type='password'
                   name='password'
                   placeholder='••••••••'
+                  value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className='text-base
                 w-full
@@ -149,6 +153,11 @@ const Login = () => {
                   focus:border-purple focus:outline-none py-4 px-4 rounded-xl'
                   required=''
                 />
+              </div>
+              <div className='flex flex-row'>
+                <p className='text-sm text-red-500'>
+                  {errorText !== '' && errorText}
+                </p>
               </div>
               <div className='flex items-center justify-between'>
                 <div className='flex items-start'>
