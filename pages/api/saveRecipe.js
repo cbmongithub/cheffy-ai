@@ -1,26 +1,28 @@
-import clientPromise from '@/utils/mongodb'
+import connectToMongoDb from '@/lib/mongodb'
+import User from '@/models/user'
 
 const saveRecipe = async (req, res) => {
-  try {
-    const client = await clientPromise
-    const db = client.db('recipes')
-    const { timestamp, title, description, ingredients, instructions, index } =
-      req.body
+  connectToMongoDb().catch((err) => res.json(err))
+  const { timestamp, title, description, ingredients, instructions, index } =
+    req.body
 
-    const recipes = await db.collection('recipes').insertOne({
+  const saveRecipeToUser = await User.save({
+    recipes: {
       timestamp,
       title,
       description,
       ingredients,
       instructions,
       index,
+    },
+  })
+    .then((data) => {
+      console.log(data)
+      return res.status(201).json({ text: 'Saved Recipe!', index: index })
     })
-    res.status(200).json({ text: 'Saved!', index: index })
-    //res.redirect('/recipes')
-  } catch (e) {
-    console.error(e)
-    res.status(500).json({ error: 'Error :(', e })
-  }
+    .catch((err) => {
+      res.status(409).json({ error: err })
+    })
 }
 
 export default saveRecipe

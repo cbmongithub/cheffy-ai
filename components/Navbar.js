@@ -5,7 +5,6 @@ import Link from 'next/link'
 
 const Navbar = () => {
   const { data: session } = useSession()
-  console.log(session)
   const [show, setShow] = useState(false)
   return (
     <nav className='bg-purple fixed w-full z-50 shadow-lg top-0 left-0'>
@@ -36,7 +35,7 @@ const Navbar = () => {
             <button
               type='button'
               className='text-white bg-purpleDark hover:text-purple hover:bg-white focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center mr-4'
-              onClick={() => signOut('github')}
+              onClick={() => signOut()}
             >
               Logout
             </button>

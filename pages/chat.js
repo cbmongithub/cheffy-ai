@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
 import Sidebar from '@/components/Sidebar'
 import useLocalStorage from 'use-local-storage'
 import Image from 'next/image'
@@ -7,19 +8,19 @@ import ScrollableFeed from 'react-scrollable-feed'
 
 const Chat = () => {
   const { data: session } = useSession()
-  const [name, setName] = useState('')
   const [typing, setIsTyping] = useState(false)
   const [storedValues, setStoredValues] = useLocalStorage('chat', [])
   const [newQuestion, setNewQuestion] = useState('')
-
-  useEffect(() => {
-    setName(sessionStorage.getItem('name'))
-  }, [setName])
+  const router = useRouter()
 
   const handleSubmit = (e) => {
     e.preventDefault()
     setNewQuestion('')
   }
+
+  useEffect(() => {
+    !session ? router.push('/') : session
+  })
 
   const generateResponse = async (newQuestion, setNewQuestion) => {
     setIsTyping(true)
@@ -78,10 +79,17 @@ const Chat = () => {
                 <div className='flex justify-start mb-4'>
                   <div className='py-3 px-4 bg-purple rounded-lg text-white'>
                     <p className='text-md'>
-                      Welcome,{' '}
-                      {session
-                        ? session.user.name.split(' ').slice(0, -1).join(' ')
-                        : name}
+                      Welcome
+                      {session.user.name &&
+                        `, ${session.user.name
+                          .split(' ')
+                          .slice(0, -1)
+                          .join(' ')}`}
+                      {session.user.fullName &&
+                        `, ${session.user.fullName
+                          .split(' ')
+                          .slice(0, -1)
+                          .join(' ')}`}
                       ! I am Cheffy. My job is to provide you with any recipe
                       that you want. What are you in the mood for?
                     </p>

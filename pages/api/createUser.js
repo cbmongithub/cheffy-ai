@@ -1,9 +1,9 @@
-import clientPromise from '@/utils/mongodb'
+import connectToMongoDb from '@/lib/mongodb'
 
 const createUser = async (req, res) => {
   console.log(req.body)
   try {
-    const client = await clientPromise
+    const client = await connectToMongoDb()
     const db = client.db('users')
     const { timestamp, firstName, lastName, email, password } = req.body
 

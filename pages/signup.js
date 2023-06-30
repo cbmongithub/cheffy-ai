@@ -1,34 +1,80 @@
 import { useState } from 'react'
-import { useRouter } from 'next/router'
+import axios, { AxiosError } from 'axios'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { loginUser } from '../helpers'
 import backgroundPattern from '../public/vegetablepattern.jpg'
 
 const Signup = () => {
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [data, setData] = useState({
+    fullName: '',
+    email: '',
+    password: '',
+  })
   const [isSignedUp, setIsSignedUp] = useState(false)
+  const [validationErrors, setValidationErrors] = useState([])
+  const [submitError, setSubmitError] = useState('')
+  const [loading, setLoading] = useState(false)
   const router = useRouter()
 
-  const handleSubmit = async (e) => {
+  const validateData = (data) => {
+    const err = []
+
+    if (data.fullName?.length < 4) {
+      err.push({ fullName: 'Full name must be at least 4 characters long' })
+    } else if (data.fullName?.length > 30) {
+      err.push({ firstName: 'Full name must be less than 30 characters' })
+    } else if (data.password?.length < 6) {
+      err.push({ password: 'Password must be at least 6 characters' })
+    }
+
+    setValidationErrors(err)
+
+    if (err.length > 0) {
+      return false
+    } else {
+      return true
+    }
+  }
+  const handleInputChange = (e) => {
+    setData({ ...data, [e.target.name]: e.target.value })
+  }
+  const handleSignup = async (e) => {
     e.preventDefault()
-    const response = await fetch('/api/createUser', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        timestamp: Date.now(),
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        password: password,
-      }),
-    })
-    let data = await response.json()
-    data.text ? setIsSignedUp(true) : setIsSignedUp(false)
+
+    const isValid = validateData(data)
+
+    if (isValid) {
+      try {
+        setLoading(true)
+        const apiRes = await axios.post(
+          'http://localhost:3000/api/auth/signup',
+          data
+        )
+
+        if (apiRes?.data?.success) {
+          const loginRes = await loginUser({
+            email: data.email,
+            password: data.password,
+          })
+
+          if (loginRes && !loginRes.ok) {
+            setSubmitError(loginRes.error || '')
+          } else {
+            router.push('/chat')
+          }
+          setIsSignedUp(true)
+        }
+      } catch (error) {
+        if (error instanceof AxiosError) {
+          const errorMsg = error.response?.data?.error
+          setSubmitError(errorMsg)
+        }
+      }
+
+      setLoading(false)
+    }
   }
 
   return (
@@ -58,22 +104,19 @@ const Signup = () => {
                 Sign Up
               </h1>
               <hr />
-              <form className='space-y-4 md:space-y-6' onSubmit={handleSubmit}>
+              <form className='space-y-4 md:space-y-6' onSubmit={handleSignup}>
                 <div>
                   <label
-                    htmlFor='firstName'
+                    htmlFor='fullName'
                     className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
                   >
-                    First Name
+                    Full Name
                   </label>
                   <input
                     type='text'
-                    name='firstName'
-                    value={firstName}
-                    onChange={(e) => {
-                      setFirstName(e.target.value)
-                      console.log(firstName)
-                    }}
+                    name='fullName'
+                    value={data.fullName}
+                    onChange={handleInputChange}
                     className='text-base
                 w-full
                 font-normal
@@ -84,36 +127,7 @@ const Signup = () => {
                 ease-in-out
                 m-0
                   focus:border-purple focus:outline-none py-4 px-4 rounded-xl'
-                    placeholder='Jane'
-                    required
-                  />
-                </div>
-                <div>
-                  <label
-                    htmlFor='lastName'
-                    className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
-                  >
-                    Last Name
-                  </label>
-                  <input
-                    type='text'
-                    name='lastName'
-                    value={lastName}
-                    onChange={(e) => {
-                      setLastName(e.target.value)
-                      console.log(lastName)
-                    }}
-                    className='text-base
-                w-full
-                font-normal
-                text-zinc-700 dark:text-zinc-200
-                bg-zinc-50 dark:bg-slate-800 bg-clip-padding
-                border border-solid border-zinc-300 dark:border-zinc-500
-                transition
-                ease-in-out
-                m-0
-                  focus:border-purple focus:outline-none py-4 px-4 rounded-xl'
-                    placeholder='Doe'
+                    placeholder='Jane Doe'
                     required
                   />
                 </div>
@@ -127,11 +141,8 @@ const Signup = () => {
                   <input
                     type='email'
                     name='email'
-                    value={email}
-                    onChange={(e) => {
-                      setEmail(e.target.value)
-                      console.log(email)
-                    }}
+                    value={data.email}
+                    onChange={handleInputChange}
                     className='text-base
                 w-full
                 font-normal
@@ -157,11 +168,8 @@ const Signup = () => {
                     type='password'
                     name='password'
                     placeholder='••••••••'
-                    value={password}
-                    onChange={(e) => {
-                      setPassword(e.target.value)
-                      console.log(password)
-                    }}
+                    value={data.password}
+                    onChange={handleInputChange}
                     className='text-base
                 w-full
                 font-normal
@@ -175,10 +183,10 @@ const Signup = () => {
                     required
                   />
                 </div>
-
                 <button
                   type='submit'
                   className='w-full hover:shadow-lg text-white bg-purple hover:bg-purpleDark focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center'
+                  disabled={loading}
                 >
                   Sign Up
                 </button>
@@ -191,6 +199,7 @@ const Signup = () => {
                     Login
                   </Link>
                 </p>
+                {submitError && <p>{submitError}</p>}
               </form>
             </div>
           </div>

@@ -1,34 +1,47 @@
 import { useState } from 'react'
+import { loginUser } from '@/helpers'
 import { signIn } from 'next-auth/react'
+import { useRouter } from 'next/router'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import backgroundPattern from '../public/vegetablepattern.jpg'
 
 const Login = () => {
-  const router = useRouter()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [errorText, setErrorText] = useState('')
-  const handleLogin = async (e) => {
-    e.preventDefault()
-    const response = await fetch('/api/getUser', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
-    })
-    let data = await response.json()
-    if (data.data) {
-      sessionStorage.setItem('name', data.data.firstName)
-      router.push('/chat')
-    } else {
-      setErrorText(data.error)
+  const [loading, setLoading] = useState(false)
+  const [submitError, setSubmitError] = useState('')
+  const router = useRouter()
+
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value)
+  }
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value)
+  }
+
+  const handleLogin = async (event) => {
+    event.preventDefault()
+
+    try {
+      setLoading(true)
+
+      const loginRes = await loginUser(email, password)
+
+      if (loginRes && !loginRes.ok) {
+        setSubmitError(loginRes.error || '')
+      } else {
+        router.push('/chat')
+      }
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const errorMsg = error.response?.data?.error
+        setSubmitError(errorMsg)
+      }
     }
+
+    setLoading(false)
   }
 
   return (
@@ -113,7 +126,7 @@ const Login = () => {
                   type='email'
                   name='email'
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={handleEmailChange}
                   className='text-base
                 w-full
                 font-normal
@@ -139,7 +152,7 @@ const Login = () => {
                   name='password'
                   placeholder='••••••••'
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={handlePasswordChange}
                   className='text-base
                 w-full
                 font-normal
@@ -150,13 +163,7 @@ const Login = () => {
                 ease-in-out
                 m-0
                   focus:border-purple focus:outline-none py-4 px-4 rounded-xl'
-                  required=''
                 />
-              </div>
-              <div className='flex flex-row'>
-                <p className='text-sm text-red-500'>
-                  {errorText !== '' && errorText}
-                </p>
               </div>
               <div className='flex items-center justify-between'>
                 <div className='flex items-start'>
@@ -165,7 +172,6 @@ const Login = () => {
                       aria-describedby='remember'
                       type='checkbox'
                       className='w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800'
-                      required=''
                     />
                   </div>
                   <div className='ml-3 text-sm'>
@@ -187,6 +193,7 @@ const Login = () => {
               <button
                 type='submit'
                 className='w-full hover:shadow-lg text-white bg-purple hover:bg-purpleDark focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center'
+                disabled={loading}
               >
                 Sign in
               </button>
@@ -199,6 +206,7 @@ const Login = () => {
                   Sign up
                 </Link>
               </p>
+              {submitError && <p>{submitError}</p>}
             </form>
           </div>
         </div>
