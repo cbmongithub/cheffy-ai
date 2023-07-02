@@ -26,14 +26,6 @@ const signUpHandler = async (req, res) => {
         fullName,
         email,
         password,
-        recipes: [
-          {
-            title: null,
-            description: null,
-            ingredients: null,
-            instructions: null,
-          },
-        ],
       })
         .then((data) => {
           const user = {

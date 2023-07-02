@@ -25,8 +25,8 @@ const UserSchema = new Schema({
     {
       title: { type: String },
       description: { type: String },
-      ingredients: { type: String },
-      instructions: { type: String },
+      ingredients: { type: Array },
+      instructions: { type: Array },
     },
   ],
 })
