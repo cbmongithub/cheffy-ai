@@ -21,14 +21,14 @@ const UserSchema = new Schema({
     required: [true, 'Password is required'],
     select: false,
   },
-  recipes: {
-    timestamp: { type: Number },
-    title: { type: String },
-    description: { type: String },
-    ingredients: { type: String },
-    instructions: { type: String },
-    index: { type: Number },
-  },
+  recipes: [
+    {
+      title: { type: String },
+      description: { type: String },
+      ingredients: { type: String },
+      instructions: { type: String },
+    },
+  ],
 })
 
 const User = models.User || model('User', UserSchema)

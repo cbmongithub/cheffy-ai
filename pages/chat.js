@@ -80,16 +80,17 @@ const Chat = () => {
                   <div className='py-3 px-4 bg-purple rounded-lg text-white'>
                     <p className='text-md'>
                       Welcome
-                      {session.user.name &&
-                        `, ${session.user.name
-                          .split(' ')
-                          .slice(0, -1)
-                          .join(' ')}`}
-                      {session.user.fullName &&
-                        `, ${session.user.fullName
-                          .split(' ')
-                          .slice(0, -1)
-                          .join(' ')}`}
+                      {session && session.user.name
+                        ? `, ${session.user.name
+                            .split(' ')
+                            .slice(0, -1)
+                            .join(' ')}`
+                        : session && session.user.fullName
+                        ? `, ${session.user.fullName
+                            .split(' ')
+                            .slice(0, -1)
+                            .join(' ')}`
+                        : ''}
                       ! I am Cheffy. My job is to provide you with any recipe
                       that you want. What are you in the mood for?
                     </p>
@@ -161,7 +162,7 @@ const Chat = () => {
 
 const AnswerSection = ({ storedValues }) => {
   const [saved, setSaved] = useState(false)
-  const [savedIndex, setSavedIndex] = useState()
+  const { data: session } = useSession()
   const generateFirstLine = (recipe) => {
     const firstLine = [
       `Here is a recipe for ${recipe}`,
@@ -174,11 +175,11 @@ const AnswerSection = ({ storedValues }) => {
   }
 
   const saveRecipe = async (
+    email,
     title,
     description,
     ingredients,
-    instructions,
-    index
+    instructions
   ) => {
     const response = await fetch('/api/saveRecipe', {
       method: 'POST',
@@ -186,17 +187,16 @@ const AnswerSection = ({ storedValues }) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        timestamp: Date.now(),
+        email: email,
         title: title,
         description: description,
         ingredients: ingredients,
         instructions: instructions,
-        index: index,
       }),
     })
     let answer = await response.json()
+    console.log(answer)
     setSaved(true)
-    setSavedIndex(answer.index)
   }
   return (
     <>
@@ -233,15 +233,15 @@ const AnswerSection = ({ storedValues }) => {
                       className='text-md my-5 bg-white px-4 rounded-lg py-1 text-purple shadow-md outline-none border-none hover:bg-purpleDark hover:text-white'
                       onClick={() => {
                         saveRecipe(
+                          session.user.email,
                           answer.recipeTitle,
                           answer.recipeDescription,
                           answer.ingredients,
-                          answer.instructions,
-                          index
+                          answer.instructions
                         )
                       }}
                     >
-                      {saved && index === savedIndex ? 'Saved!' : 'Save'}
+                      {saved ? 'Saved!' : 'Save'}
                     </button>
                   </div>
                   <Image
