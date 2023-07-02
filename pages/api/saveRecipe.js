@@ -3,9 +3,11 @@ import User from '@/models/user'
 
 const saveRecipe = async (req, res) => {
   connectToMongoDb().catch((err) => res.json(err))
-  const { email, title, description, ingredients, instructions } = req.body
+  const { email, timestamp, title, description, ingredients, instructions } =
+    req.body
 
   const recipe = {
+    timestamp: timestamp,
     title: title,
     description: description,
     ingredients: ingredients,

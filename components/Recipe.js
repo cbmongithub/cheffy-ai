@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+dayjs.extend(relativeTime)
 
 const Recipe = ({
   timestamp,
@@ -8,10 +10,8 @@ const Recipe = ({
   description,
   ingredients,
   instructions,
-  index,
 }) => {
   const [showRecipe, setShowRecipe] = useState(false)
-  console.log(title, description, ingredients, instructions, index)
   return (
     <article className='p-6 bg-white rounded-lg shadow-2xl dark:bg-slate-800'>
       <div className='flex justify-between items-center mb-5'>
@@ -31,7 +31,9 @@ const Recipe = ({
           </svg>
           <p>Recipe</p>
         </span>
-        <span className='text-sm'>{dayjs(timestamp).format('M/DD/YYYY')}</span>
+        <span className='text-sm'>
+          {`${dayjs(timestamp ? timestamp : 1688320988).fromNow(true)} ago`}
+        </span>
       </div>
       <h2 className='mb-2 text-2xl font-bold tracking-tight text-zinc-900'>
         {title}
@@ -63,12 +65,12 @@ const Recipe = ({
       {showRecipe ? (
         <div className='text-zinc-900 py-5'>
           <br />
-          <p class='font-bold'>Ingredients:</p>
+          <p className='font-bold'>Ingredients:</p>
           {ingredients.map((ingredient, i) => {
             return <p key={i}>- {ingredient}</p>
           })}
           <br />
-          <p class='font-bold'>Instructions:</p>
+          <p className='font-bold'>Instructions:</p>
           {instructions.map((instruction, i) => {
             return (
               <p key={i}>

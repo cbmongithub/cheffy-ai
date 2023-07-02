@@ -176,6 +176,7 @@ const AnswerSection = ({ storedValues }) => {
 
   const saveRecipe = async (
     email,
+    timestamp,
     title,
     description,
     ingredients,
@@ -188,6 +189,7 @@ const AnswerSection = ({ storedValues }) => {
       },
       body: JSON.stringify({
         email: email,
+        timestamp: Number(timestamp),
         title: title,
         description: description,
         ingredients: ingredients,
@@ -234,6 +236,7 @@ const AnswerSection = ({ storedValues }) => {
                       onClick={() => {
                         saveRecipe(
                           session.user.email,
+                          Date.now(),
                           answer.recipeTitle,
                           answer.recipeDescription,
                           answer.ingredients,

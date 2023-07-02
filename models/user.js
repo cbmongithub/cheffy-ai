@@ -23,6 +23,7 @@ const UserSchema = new Schema({
   },
   recipes: [
     {
+      timestamp: { type: Number },
       title: { type: String },
       description: { type: String },
       ingredients: { type: Array },

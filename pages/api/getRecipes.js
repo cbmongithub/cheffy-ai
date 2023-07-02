@@ -1,24 +1,16 @@
-import clientPromise from '@/utils/mongodb'
+import connectToMongoDb from '@/lib/mongodb'
+import User from '@/models/user'
 
 const getRecipes = async (req, res) => {
-  try {
-    const client = await clientPromise
-    const db = client.db('recipes')
-
-    const recipes = await db
-      .collection('recipes')
-      .find({})
-      .sort({ timestamp: -1 })
-      .limit(20)
-      .toArray()
-
-    res.json(recipes)
-  } catch (e) {
-    console.error(e)
-    res
-      .status(500)
-      .json({ error: 'An error occurred while trying to fetch recipes.', e })
-  }
+  connectToMongoDb().catch((err) => res.json(err))
+  const { email } = req.body
+  const user = await User.findOne({ email: email })
+    .then((user) => {
+      return res.status(201).json(user)
+    })
+    .catch((err) => {
+      res.status(409).json({ error: err })
+    })
 }
 
 export default getRecipes

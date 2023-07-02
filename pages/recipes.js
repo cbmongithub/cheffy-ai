@@ -1,34 +1,56 @@
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import Sidebar from '@/components/Sidebar'
 import Recipe from '@/components/Recipe'
 
-const Recipes = ({ allRecipes }) => {
+const Recipes = () => {
   const { data: session } = useSession()
+  const [allRecipes, setAllRecipes] = useState('')
   const router = useRouter()
 
+  const getRecipes = async (email) => {
+    const response = await fetch('/api/getRecipes', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: email,
+      }),
+    })
+
+    let recipes = await response.json()
+    setAllRecipes(recipes)
+  }
+
   useEffect(() => {
-    !session ? router.push('/login') : null
-  }, [session, router])
+    if (!session) {
+      router.push('/login')
+    } else {
+      console.log(session)
+      getRecipes(session.user.email)
+    }
+  }, [])
+
   return (
     <>
       <Sidebar />
       <div className='mt-[100px] md:mt-0 w-full md:w-4/6 lg:w-5/6 absolute top-0 right-0 mx-auto px-12 py-16'>
         <div className='grid gap-12 lg:grid-cols-1'>
-          {allRecipes.map((recipe, i) => {
-            return (
-              <Recipe
-                key={i}
-                timestamp={recipe.timestamp}
-                title={recipe.title}
-                description={recipe.description}
-                ingredients={recipe.ingredients}
-                instructions={recipe.instructions}
-                index={recipe.index}
-              />
-            )
-          })}
+          {allRecipes &&
+            allRecipes.recipes.map((recipe, i) => {
+              return (
+                <Recipe
+                  key={i}
+                  timestamp={recipe.timestamp}
+                  title={recipe.title}
+                  description={recipe.description}
+                  ingredients={recipe.ingredients}
+                  instructions={recipe.instructions}
+                />
+              )
+            })}
         </div>
       </div>
     </>
@@ -36,16 +58,3 @@ const Recipes = ({ allRecipes }) => {
 }
 
 export default Recipes
-
-export async function getServerSideProps() {
-  let res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getRecipes`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-  let allRecipes = await res.json()
-  return {
-    props: { allRecipes },
-  }
-}
