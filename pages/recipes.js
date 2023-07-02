@@ -31,7 +31,7 @@ const Recipes = () => {
       console.log(session)
       getRecipes(session.user.email)
     }
-  }, [])
+  }, [router, session])
 
   return (
     <>
