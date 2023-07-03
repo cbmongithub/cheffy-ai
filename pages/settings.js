@@ -46,7 +46,7 @@ const Settings = () => {
     setUser({
       fullName: userData.fullName,
       email: userData.email,
-      password: '••••••••••',
+      password: userData.password,
       country: userData.country ? userData.country : 'USA',
       language: userData.language ? userData.language : 'English',
     })
@@ -140,7 +140,7 @@ const Settings = () => {
                     className='inline-block w-full bg-white text-zinc-700 border border-zinc-400 shadow-inner rounded-md py-3 px-4 leading-tight focus:outline-none  focus:border-zinc-500'
                     type='password'
                     name='password'
-                    placeholder={user.password}
+                    placeholder='••••••••'
                     value={user.password}
                     onChange={handleInputChange}
                   />
@@ -156,6 +156,7 @@ const Settings = () => {
                 <div className='flex-shrink w-full inline-block relative'>
                   <select
                     onChange={handleCountryChange}
+                    value={user.country}
                     className='block appearance-none text-zinc-500 w-full bg-white border border-zinc-400 shadow-inner px-4 py-2 pr-8 rounded'
                   >
                     {countryOptions.map((option, index) => {
@@ -180,6 +181,7 @@ const Settings = () => {
                 <div className='flex-shrink w-full inline-block relative'>
                   <select
                     onChange={handleLanguageChange}
+                    value={user.language}
                     className='block appearance-none text-zinc-500 w-full bg-white border border-zinc-400 shadow-inner px-4 py-2 pr-8 rounded'
                   >
                     {languageOptions.map((option, index) => {
