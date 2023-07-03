@@ -161,7 +161,7 @@ const Chat = () => {
 }
 
 const AnswerSection = ({ storedValues }) => {
-  const [saved, setSaved] = useState(false)
+  const [saved, setSaved] = useState('Save')
   const { data: session } = useSession()
   const generateFirstLine = (recipe) => {
     const firstLine = [
@@ -198,7 +198,7 @@ const AnswerSection = ({ storedValues }) => {
     })
     let answer = await response.json()
     console.log(answer)
-    setSaved(true)
+    setSaved(answer.text)
   }
   return (
     <>
@@ -244,7 +244,7 @@ const AnswerSection = ({ storedValues }) => {
                         )
                       }}
                     >
-                      {saved ? 'Saved!' : 'Save'}
+                      {saved}
                     </button>
                   </div>
                   <Image

@@ -26,7 +26,7 @@ const saveRecipe = async (req, res) => {
     }
   )
     .then((user) => {
-      return res.status(201).json({ text: 'Saved Recipe!', data: user })
+      return res.status(201).json({ text: 'Saved!', data: user })
     })
     .catch((err) => {
       res.status(409).json({ error: err })

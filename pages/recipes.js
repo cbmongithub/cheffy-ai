@@ -29,7 +29,6 @@ const Recipes = () => {
     if (!session) {
       router.push('/login')
     } else {
-      console.log(session)
       getRecipes(session.user.email)
     }
   }, [router, session])
