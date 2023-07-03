@@ -1,15 +1,37 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import Sidebar from '@/components/Sidebar'
 
 const Settings = () => {
   const { data: session } = useSession()
+  const [user, setUser] = useState('')
   const router = useRouter()
 
+  const getUser = async (email) => {
+    const response = await fetch('/api/getUser', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: email,
+      }),
+    })
+
+    let userData = await response.json()
+    setUser(userData)
+    console.log(user)
+  }
+
   useEffect(() => {
-    !session ? router.push('/login') : null
-  }, [session, router])
+    if (!session) {
+      router.push('/login')
+    } else {
+      getUser(session.user.email)
+    }
+  }, [router, session])
+
   return (
     <>
       <Sidebar />
@@ -20,26 +42,14 @@ const Settings = () => {
             <div className='flex flex-wrap -mx-3 mb-6'>
               <div className='w-full border-zinc-400'>
                 <div className='flex items-center justify-between mt-3'>
-                  <div className='w-full md:w-1/2 px-3 mb-6'>
+                  <div className='w-full px-3 mb-6'>
                     <label className='block uppercase tracking-wide text-zinc-700 text-xs font-bold mb-2'>
-                      first name
+                      Full Name
                     </label>
                     <input
                       className='appearance-none block w-full bg-white text-zinc-700 border border-zinc-400 shadow-inner rounded-md py-3 px-4 leading-tight focus:outline-none  focus:border-zinc-500'
                       type='text'
-                      placeholder='Christian'
-                      required
-                    />
-                  </div>
-                  <div className='w-full md:w-1/2 px-3 mb-6'>
-                    <label className='block uppercase tracking-wide text-zinc-700 text-xs font-bold mb-2'>
-                      last name
-                    </label>
-                    <input
-                      className='appearance-none block w-full bg-white text-zinc-700 border border-zinc-400 shadow-inner rounded-md py-3 px-4 leading-tight focus:outline-none  focus:border-zinc-500'
-                      type='text'
-                      placeholder='Martinez'
-                      required
+                      placeholder={user.fullName}
                     />
                   </div>
                 </div>
@@ -55,7 +65,7 @@ const Settings = () => {
                   className='appearance-none block w-full bg-white text-zinc-700 border border-zinc-400 shadow-inner rounded-md py-3 px-4 leading-tight focus:outline-none  focus:border-zinc-500'
                   id='grid-text-1'
                   type='text'
-                  placeholder='hello@christianbmartinez.com'
+                  placeholder={user.email}
                   required
                 />
               </div>
@@ -65,18 +75,15 @@ const Settings = () => {
                 </label>
                 <div className='flex flex-row justify-between'>
                   <input
-                    className='inline-block w-4/6 bg-white text-zinc-700 border border-zinc-400 shadow-inner rounded-md py-3 px-4 leading-tight focus:outline-none  focus:border-zinc-500'
+                    className='inline-block w-full bg-white text-zinc-700 border border-zinc-400 shadow-inner rounded-md py-3 px-4 leading-tight focus:outline-none  focus:border-zinc-500'
                     id='grid-text-1'
                     type='text'
                     placeholder='**************'
                     required
                   />
-                  <button className='w-1/4 py-3 rounded-xl inline-block text-md px-4 leading-none border text-white bg-purple border-purple hover:border-purpleDark hover:bg-purpleDark hover:text-white'>
-                    Update
-                  </button>
                 </div>
               </div>
-              <div className='w-full md:w-full px-3 mb-6'>
+              <div className='w-full md:w-1/2 px-3 mb-6'>
                 <label className='block uppercase tracking-wide text-zinc-700 text-xs font-bold mb-2'>
                   Country
                 </label>
@@ -98,14 +105,14 @@ const Settings = () => {
                   </div>
                 </div>
               </div>
-              <div className='w-full md:w-full px-3 mb-6'>
+              <div className='w-full md:w-1/2 px-3 mb-6'>
                 <label className='block uppercase tracking-wide text-zinc-700 text-xs font-bold mb-2'>
                   Language
                 </label>
                 <div className='flex-shrink w-full inline-block relative'>
                   <select className='block appearance-none text-zinc-500 w-full bg-white border border-zinc-400 shadow-inner px-4 py-2 pr-8 rounded'>
                     <option>English</option>
-                    <option>France</option>
+                    <option>French</option>
                     <option>Spanish</option>
                   </select>
                   <div className='pointer-events-none absolute top-0 mt-3  right-0 flex items-center px-2 text-zinc-600'>
@@ -120,7 +127,7 @@ const Settings = () => {
                 </div>
               </div>
               <button
-                className='ml-3 mb-6 py-3 rounded-xl inline-block text-md px-4 leading-none border text-white bg-purple border-purple hover:border-purpleDark hover:bg-purpleDark hover:text-white'
+                className='ml-3 mt-3 py-3 rounded-xl inline-block text-md px-4 leading-none border text-white bg-purple border-purple hover:border-purpleDark hover:bg-purpleDark hover:text-white'
                 type='submit'
               >
                 Save Changes
