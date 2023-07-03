@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 import Sidebar from '@/components/Sidebar'
 import Recipe from '@/components/Recipe'
 
@@ -21,7 +22,7 @@ const Recipes = () => {
     })
 
     let recipes = await response.json()
-    setAllRecipes(recipes)
+    setAllRecipes(recipes.recipes)
   }
 
   useEffect(() => {
@@ -38,8 +39,8 @@ const Recipes = () => {
       <Sidebar />
       <div className='mt-[100px] md:mt-0 w-full md:w-4/6 lg:w-5/6 absolute top-0 right-0 mx-auto px-12 py-16'>
         <div className='grid gap-12 lg:grid-cols-1'>
-          {allRecipes &&
-            allRecipes.recipes.map((recipe, i) => {
+          {allRecipes.length !== 0 ? (
+            allRecipes.map((recipe, i) => {
               return (
                 <Recipe
                   key={i}
@@ -50,7 +51,26 @@ const Recipes = () => {
                   instructions={recipe.instructions}
                 />
               )
-            })}
+            })
+          ) : (
+            <div className='flex flex-row justify-center items-center h-[750px]'>
+              <div className='flex flex-col justify-center items-center'>
+                <h1 className='text-xl text-center font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white'>
+                  No saved recipes found!
+                </h1>
+                <p className='mt-5 text-md font-normal text-gray-700 dark:text-gray-400'>
+                  Click{' '}
+                  <Link
+                    href='/chat'
+                    className='font-medium text-purple hover:underline dark:text-primary-500'
+                  >
+                    here
+                  </Link>{' '}
+                  to return to chat
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </>

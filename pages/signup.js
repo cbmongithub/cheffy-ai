@@ -209,7 +209,7 @@ const Signup = () => {
               <h1 className='text-xl text-center font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white'>
                 Success!
               </h1>
-              <p className='text-sm font-light text-gray-700 dark:text-gray-400'>
+              <p className='mt-5 text-md font-normal text-gray-700 dark:text-gray-400'>
                 Click{' '}
                 <Link
                   href='/login'
