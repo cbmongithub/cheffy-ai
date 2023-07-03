@@ -35,12 +35,7 @@ export const authOptions = {
             password: password,
           })
 
-          if (!user) {
-            throw new Error('No user found')
-          } else {
-            console.log(user)
-            return user
-          }
+          return user
         } catch (error) {
           console.log(error)
         }

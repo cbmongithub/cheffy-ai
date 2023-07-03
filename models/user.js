@@ -1,6 +1,12 @@
 import { Schema, model, models } from 'mongoose'
 
 const UserSchema = new Schema({
+  fullName: {
+    type: String,
+    required: [true, 'Full name is required'],
+    minLength: [4, 'Full name should be 4 characters or more'],
+    maxLength: [30, 'Full name should be less than 30 characters'],
+  },
   email: {
     type: String,
     unique: true,
@@ -10,17 +16,13 @@ const UserSchema = new Schema({
       'Invalid email address',
     ],
   },
-  fullName: {
-    type: String,
-    required: [true, 'Full name is required'],
-    minLength: [4, 'Full name should be 4 characters or more'],
-    maxLength: [30, 'Full name should be less than 30 characters'],
-  },
   password: {
     type: String,
     required: [true, 'Password is required'],
     select: false,
   },
+  language: { type: String },
+  country: { type: String },
   recipes: [
     {
       timestamp: { type: Number },
@@ -30,12 +32,6 @@ const UserSchema = new Schema({
       instructions: { type: Array },
     },
   ],
-  language: {
-    type: String,
-  },
-  country: {
-    type: String,
-  },
 })
 
 const User = models.User || model('User', UserSchema)

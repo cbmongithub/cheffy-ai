@@ -21,6 +21,14 @@ const signUpHandler = async (req, res) => {
           .json({ error: 'Password should be 6 characters long' })
 
       //const hashedPassword = await hash(password, 12)
+      console.log(
+        'Data seen in the backend right before User.create:',
+        fullName,
+        email,
+        password,
+        language,
+        country
+      )
 
       User.create({
         fullName,
@@ -31,8 +39,11 @@ const signUpHandler = async (req, res) => {
       })
         .then((data) => {
           const user = {
-            email: data.email,
             fullName: data.fullName,
+            email: data.email,
+            password: data.password,
+            language: data.language,
+            country: data.country,
             _id: data._id,
           }
           return res.status(201).json({

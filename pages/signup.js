@@ -2,8 +2,6 @@ import { useState } from 'react'
 import axios, { AxiosError } from 'axios'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { loginUser } from '../helpers'
 import backgroundPattern from '../public/vegetablepattern.jpg'
 
 const Signup = () => {
@@ -17,19 +15,15 @@ const Signup = () => {
   const countryOptions = ['USA', 'UK', 'Spain', 'France']
   const languageOptions = ['English', 'Spanish', 'French']
   const [isSignedUp, setIsSignedUp] = useState(false)
-  const [validationErrors, setValidationErrors] = useState([])
   const [submitError, setSubmitError] = useState('')
   const [loading, setLoading] = useState(false)
-  const router = useRouter()
 
   const handleCountryChange = (e) => {
     setData({ ...data, country: e.target.value })
-    console.log(data)
   }
 
   const handleLanguageChange = (e) => {
     setData({ ...data, language: e.target.value })
-    console.log(data)
   }
 
   const handleInputChange = (e) => {
@@ -38,32 +32,18 @@ const Signup = () => {
 
   const handleSignup = async (e) => {
     e.preventDefault()
+    console.log('Data being posted to the backend:', data)
 
     try {
       setLoading(true)
-      const apiRes = await axios.post(
-        'http://localhost:3000/api/auth/signup',
-        data
-      )
-
-      if (apiRes?.data?.success) {
-        const loginRes = await loginUser({
-          email: data.email,
-          password: data.password,
+      const apiRes = await axios
+        .post('http://localhost:3000/api/auth/signup', data)
+        .then((data) => {
+          console.log('Axios response:', data)
+          setIsSignedUp(true)
         })
-
-        if (loginRes && !loginRes.ok) {
-          setSubmitError(loginRes.error || '')
-        } else {
-          router.push('/chat')
-        }
-        setIsSignedUp(true)
-      }
     } catch (error) {
-      if (error instanceof AxiosError) {
-        const errorMsg = error.response?.data?.error
-        setSubmitError(errorMsg)
-      }
+      console.log(error)
     }
 
     setLoading(false)
@@ -184,11 +164,16 @@ const Signup = () => {
                   </label>
                   <div className='flex-shrink w-full inline-block relative'>
                     <select
+                      name='country'
                       onChange={handleCountryChange}
                       className='block appearance-none text-zinc-500 w-full bg-white border border-zinc-400 shadow-inner px-4 py-2 pr-8 rounded'
                     >
                       {countryOptions.map((option, index) => {
-                        return <option key={index}>{option}</option>
+                        return (
+                          <option value={option} key={index}>
+                            {option}
+                          </option>
+                        )
                       })}
                     </select>
                     <div className='pointer-events-none absolute top-0 mt-3  right-0 flex items-center px-2 text-zinc-600'>
@@ -208,11 +193,16 @@ const Signup = () => {
                   </label>
                   <div className='flex-shrink w-full inline-block relative'>
                     <select
+                      name='language'
                       onChange={handleLanguageChange}
                       className='block appearance-none text-zinc-500 w-full bg-white border border-zinc-400 shadow-inner px-4 py-2 pr-8 rounded'
                     >
                       {languageOptions.map((option, index) => {
-                        return <option key={index}>{option}</option>
+                        return (
+                          <option value={option} key={index}>
+                            {option}
+                          </option>
+                        )
                       })}
                     </select>
                     <div className='pointer-events-none absolute top-0 mt-3  right-0 flex items-center px-2 text-zinc-600'>
