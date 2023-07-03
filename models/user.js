@@ -30,6 +30,12 @@ const UserSchema = new Schema({
       instructions: { type: Array },
     },
   ],
+  language: {
+    type: String,
+  },
+  country: {
+    type: String,
+  },
 })
 
 const User = models.User || model('User', UserSchema)

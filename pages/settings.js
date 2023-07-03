@@ -5,8 +5,31 @@ import Sidebar from '@/components/Sidebar'
 
 const Settings = () => {
   const { data: session } = useSession()
-  const [user, setUser] = useState('')
+  const [user, setUser] = useState({
+    fullName: '',
+    email: '',
+    password: '',
+    country: '',
+    language: '',
+  })
+  const countryOptions = ['USA', 'UK', 'Spain', 'France']
+  const languageOptions = ['English', 'Spanish', 'French']
   const router = useRouter()
+
+  const handleInputChange = (e) => {
+    setUser({ ...user, [e.target.name]: e.target.value })
+    console.log(user)
+  }
+
+  const handleCountryChange = (e) => {
+    setUser({ ...user, country: e.target.value })
+    console.log(user)
+  }
+
+  const handleLanguageChange = (e) => {
+    setUser({ ...user, language: e.target.value })
+    console.log(user)
+  }
 
   const getUser = async (email) => {
     const response = await fetch('/api/getUser', {
@@ -19,9 +42,35 @@ const Settings = () => {
       }),
     })
 
-    let userData = await response.json()
-    setUser(userData)
-    console.log(user)
+    const userData = await response.json()
+    setUser({
+      fullName: userData.fullName,
+      email: userData.email,
+      password: '••••••••••',
+      country: userData.country ? userData.country : 'USA',
+      language: userData.language ? userData.language : 'English',
+    })
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    const response = await fetch('/api/updateUser', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: user.email,
+        fullName: user.fullName,
+        password: user.password,
+        country: user.country,
+        language: user.language,
+      }),
+    })
+
+    let answer = await response.json()
+    console.log(answer)
   }
 
   useEffect(() => {
@@ -38,15 +87,24 @@ const Settings = () => {
       <div className='mt-[100px] md:mt-0 py-16 w-full md:w-4/6 flex flex-row justify-center items-center md:fixed md:top-0 md:right-0 lg:w-5/6'>
         <div className='w-5/6 md:w-4/6 p-6 mx-auto bg-white rounded-lg shadow-2xl'>
           <h2 className='text-2xl text-zinc-900'>Account Settings</h2>
-          <form className='mt-6 border-t border-zinc-400 pt-4'>
+          <form
+            className='mt-6 border-t border-zinc-400 pt-4'
+            onSubmit={handleSubmit}
+          >
             <div className='flex flex-wrap -mx-3 mb-6'>
               <div className='w-full border-zinc-400'>
                 <div className='flex items-center justify-between mt-3'>
                   <div className='w-full px-3 mb-6'>
-                    <label className='block uppercase tracking-wide text-zinc-700 text-xs font-bold mb-2'>
+                    <label
+                      htmlFor='fullName'
+                      className='block uppercase tracking-wide text-zinc-700 text-xs font-bold mb-2'
+                    >
                       Full Name
                     </label>
                     <input
+                      name='fullName'
+                      value={user.fullName}
+                      onChange={handleInputChange}
                       className='appearance-none block w-full bg-white text-zinc-700 border border-zinc-400 shadow-inner rounded-md py-3 px-4 leading-tight focus:outline-none  focus:border-zinc-500'
                       type='text'
                       placeholder={user.fullName}
@@ -57,42 +115,52 @@ const Settings = () => {
               <div className='w-full md:w-full px-3 mb-6'>
                 <label
                   className='block uppercase tracking-wide text-zinc-700 text-xs font-bold mb-2'
-                  htmlFor='grid-text-1'
+                  htmlFor='email'
                 >
                   email address
                 </label>
                 <input
-                  className='appearance-none block w-full bg-white text-zinc-700 border border-zinc-400 shadow-inner rounded-md py-3 px-4 leading-tight focus:outline-none  focus:border-zinc-500'
-                  id='grid-text-1'
-                  type='text'
+                  className='appearance-none block w-full bg-gray-50 cursor-disabled text-gray-400 border border-zinc-400 shadow-inner rounded-md py-3 px-4 leading-tight'
+                  type='email'
+                  name='email'
+                  value={user.email}
+                  disabled
                   placeholder={user.email}
-                  required
                 />
               </div>
               <div className='w-full md:w-full px-3 mb-6 '>
-                <label className='block uppercase tracking-wide text-zinc-700 text-xs font-bold mb-2'>
+                <label
+                  htmlFor='password'
+                  className='block uppercase tracking-wide text-zinc-700 text-xs font-bold mb-2'
+                >
                   password
                 </label>
                 <div className='flex flex-row justify-between'>
                   <input
                     className='inline-block w-full bg-white text-zinc-700 border border-zinc-400 shadow-inner rounded-md py-3 px-4 leading-tight focus:outline-none  focus:border-zinc-500'
-                    id='grid-text-1'
-                    type='text'
-                    placeholder='**************'
-                    required
+                    type='password'
+                    name='password'
+                    placeholder={user.password}
+                    value={user.password}
+                    onChange={handleInputChange}
                   />
                 </div>
               </div>
               <div className='w-full md:w-1/2 px-3 mb-6'>
-                <label className='block uppercase tracking-wide text-zinc-700 text-xs font-bold mb-2'>
-                  Country
+                <label
+                  htmlFor='country'
+                  className='block uppercase tracking-wide text-zinc-700 text-xs font-bold mb-2'
+                >
+                  country
                 </label>
                 <div className='flex-shrink w-full inline-block relative'>
-                  <select className='block appearance-none text-zinc-500 w-full bg-white border border-zinc-400 shadow-inner px-4 py-2 pr-8 rounded'>
-                    <option>USA</option>
-                    <option>France</option>
-                    <option>Spain</option>
-                    <option>UK</option>
+                  <select
+                    onChange={handleCountryChange}
+                    className='block appearance-none text-zinc-500 w-full bg-white border border-zinc-400 shadow-inner px-4 py-2 pr-8 rounded'
+                  >
+                    {countryOptions.map((option, index) => {
+                      return <option key={index}>{option}</option>
+                    })}
                   </select>
                   <div className='pointer-events-none absolute top-0 mt-3  right-0 flex items-center px-2 text-zinc-600'>
                     <svg
@@ -110,10 +178,13 @@ const Settings = () => {
                   Language
                 </label>
                 <div className='flex-shrink w-full inline-block relative'>
-                  <select className='block appearance-none text-zinc-500 w-full bg-white border border-zinc-400 shadow-inner px-4 py-2 pr-8 rounded'>
-                    <option>English</option>
-                    <option>French</option>
-                    <option>Spanish</option>
+                  <select
+                    onChange={handleLanguageChange}
+                    className='block appearance-none text-zinc-500 w-full bg-white border border-zinc-400 shadow-inner px-4 py-2 pr-8 rounded'
+                  >
+                    {languageOptions.map((option, index) => {
+                      return <option key={index}>{option}</option>
+                    })}
                   </select>
                   <div className='pointer-events-none absolute top-0 mt-3  right-0 flex items-center px-2 text-zinc-600'>
                     <svg
