@@ -11,70 +11,62 @@ const Signup = () => {
     fullName: '',
     email: '',
     password: '',
+    language: '',
+    country: '',
   })
+  const countryOptions = ['USA', 'UK', 'Spain', 'France']
+  const languageOptions = ['English', 'Spanish', 'French']
   const [isSignedUp, setIsSignedUp] = useState(false)
   const [validationErrors, setValidationErrors] = useState([])
   const [submitError, setSubmitError] = useState('')
   const [loading, setLoading] = useState(false)
   const router = useRouter()
 
-  const validateData = (data) => {
-    const err = []
-
-    if (data.fullName?.length < 4) {
-      err.push({ fullName: 'Full name must be at least 4 characters long' })
-    } else if (data.fullName?.length > 30) {
-      err.push({ firstName: 'Full name must be less than 30 characters' })
-    } else if (data.password?.length < 6) {
-      err.push({ password: 'Password must be at least 6 characters' })
-    }
-
-    setValidationErrors(err)
-
-    if (err.length > 0) {
-      return false
-    } else {
-      return true
-    }
+  const handleCountryChange = (e) => {
+    setData({ ...data, country: e.target.value })
+    console.log(data)
   }
+
+  const handleLanguageChange = (e) => {
+    setData({ ...data, language: e.target.value })
+    console.log(data)
+  }
+
   const handleInputChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value })
   }
+
   const handleSignup = async (e) => {
     e.preventDefault()
 
-    const isValid = validateData(data)
+    try {
+      setLoading(true)
+      const apiRes = await axios.post(
+        'http://localhost:3000/api/auth/signup',
+        data
+      )
 
-    if (isValid) {
-      try {
-        setLoading(true)
-        const apiRes = await axios.post(
-          'http://localhost:3000/api/auth/signup',
-          data
-        )
+      if (apiRes?.data?.success) {
+        const loginRes = await loginUser({
+          email: data.email,
+          password: data.password,
+        })
 
-        if (apiRes?.data?.success) {
-          const loginRes = await loginUser({
-            email: data.email,
-            password: data.password,
-          })
-
-          if (loginRes && !loginRes.ok) {
-            setSubmitError(loginRes.error || '')
-          } else {
-            router.push('/chat')
-          }
-          setIsSignedUp(true)
+        if (loginRes && !loginRes.ok) {
+          setSubmitError(loginRes.error || '')
+        } else {
+          router.push('/chat')
         }
-      } catch (error) {
-        if (error instanceof AxiosError) {
-          const errorMsg = error.response?.data?.error
-          setSubmitError(errorMsg)
-        }
+        setIsSignedUp(true)
       }
-
-      setLoading(false)
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const errorMsg = error.response?.data?.error
+        setSubmitError(errorMsg)
+      }
     }
+
+    setLoading(false)
   }
 
   return (
@@ -183,6 +175,57 @@ const Signup = () => {
                     required
                   />
                 </div>
+                <div className='w-full mb-6'>
+                  <label
+                    htmlFor='country'
+                    className='block uppercase tracking-wide text-zinc-700 text-xs font-bold mb-2'
+                  >
+                    country
+                  </label>
+                  <div className='flex-shrink w-full inline-block relative'>
+                    <select
+                      onChange={handleCountryChange}
+                      className='block appearance-none text-zinc-500 w-full bg-white border border-zinc-400 shadow-inner px-4 py-2 pr-8 rounded'
+                    >
+                      {countryOptions.map((option, index) => {
+                        return <option key={index}>{option}</option>
+                      })}
+                    </select>
+                    <div className='pointer-events-none absolute top-0 mt-3  right-0 flex items-center px-2 text-zinc-600'>
+                      <svg
+                        className='fill-current h-4 w-4'
+                        xmlns='http://www.w3.org/2000/svg'
+                        viewBox='0 0 20 20'
+                      >
+                        <path d='M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z' />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <div className='w-full mb-6'>
+                  <label className='block uppercase tracking-wide text-zinc-700 text-xs font-bold mb-2'>
+                    Language
+                  </label>
+                  <div className='flex-shrink w-full inline-block relative'>
+                    <select
+                      onChange={handleLanguageChange}
+                      className='block appearance-none text-zinc-500 w-full bg-white border border-zinc-400 shadow-inner px-4 py-2 pr-8 rounded'
+                    >
+                      {languageOptions.map((option, index) => {
+                        return <option key={index}>{option}</option>
+                      })}
+                    </select>
+                    <div className='pointer-events-none absolute top-0 mt-3  right-0 flex items-center px-2 text-zinc-600'>
+                      <svg
+                        className='fill-current h-4 w-4'
+                        xmlns='http://www.w3.org/2000/svg'
+                        viewBox='0 0 20 20'
+                      >
+                        <path d='M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z' />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
                 <button
                   type='submit'
                   className='w-full hover:shadow-lg text-white bg-purple hover:bg-purpleDark focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center'
@@ -218,6 +261,7 @@ const Signup = () => {
                   here
                 </Link>{' '}
                 to return to the login page
+                {`, ${data.fullName.split(' ').slice(0, -1).join(' ')}`}
               </p>
             </div>
           </div>

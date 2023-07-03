@@ -8,7 +8,7 @@ const signUpHandler = async (req, res) => {
   if (req.method === 'POST') {
     if (!req.body) return res.status(400).json({ error: 'Data is missing' })
 
-    const { fullName, email, password } = req.body
+    const { fullName, email, password, language, country } = req.body
 
     const userExists = await User.findOne({ email })
 
@@ -26,6 +26,8 @@ const signUpHandler = async (req, res) => {
         fullName,
         email,
         password,
+        language,
+        country,
       })
         .then((data) => {
           const user = {
