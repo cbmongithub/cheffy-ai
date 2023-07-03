@@ -47,8 +47,8 @@ const Settings = () => {
       fullName: userData.fullName,
       email: userData.email,
       password: userData.password,
-      country: userData.country ? userData.country : 'USA',
-      language: userData.language ? userData.language : 'English',
+      country: userData.country,
+      language: userData.language,
     })
   }
 
