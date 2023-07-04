@@ -33,9 +33,7 @@ const Login = () => {
         router.push('/chat')
       }
     } catch (error) {
-      if (error) {
-        console.log(error)
-      }
+      console.log(error)
     }
     setLoading(false)
   }
