@@ -35,7 +35,12 @@ const Navbar = () => {
             <button
               type='button'
               className='text-white bg-purpleDark hover:text-purple hover:bg-white focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center mr-4'
-              onClick={() => signOut()}
+              onClick={() => {
+                signOut({
+                  callbackUrl: '/',
+                })
+                localStorage.clear()
+              }}
             >
               Logout
             </button>
