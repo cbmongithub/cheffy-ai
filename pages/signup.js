@@ -166,6 +166,7 @@ const Signup = () => {
                     <select
                       name='country'
                       onChange={handleCountryChange}
+                      value={'United States of America'}
                       className='block appearance-none text-zinc-500 w-full bg-white border border-zinc-400 shadow-inner px-4 py-2 pr-8 rounded'
                     >
                       {countryOptions.map((option, index) => {
@@ -195,6 +196,7 @@ const Signup = () => {
                     <select
                       name='language'
                       onChange={handleLanguageChange}
+                      value={'English'}
                       className='block appearance-none text-zinc-500 w-full bg-white border border-zinc-400 shadow-inner px-4 py-2 pr-8 rounded'
                     >
                       {languageOptions.map((option, index) => {
