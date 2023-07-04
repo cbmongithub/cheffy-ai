@@ -10,7 +10,7 @@ const Signup = () => {
     email: '',
     password: '',
     language: 'English',
-    country: 'USA',
+    country: 'United States of America',
   })
 
   const [isSignedUp, setIsSignedUp] = useState(false)
@@ -41,8 +41,8 @@ const Signup = () => {
         body: JSON.stringify(data),
       })
 
-      let data = await response.json()
-      data.success ? setIsSignedUp(true) : setSubmitError(data.error)
+      let answer = await response.json()
+      answer.success ? setIsSignedUp(true) : setSubmitError(answer.error)
     } catch (error) {
       console.log(error)
     }
@@ -166,7 +166,7 @@ const Signup = () => {
                     <select
                       name='country'
                       onChange={handleCountryChange}
-                      value={'United States of America'}
+                      value={data.country}
                       className='block appearance-none text-zinc-500 w-full bg-white border border-zinc-400 shadow-inner px-4 py-2 pr-8 rounded'
                     >
                       {countryOptions.map((option, index) => {
@@ -196,7 +196,7 @@ const Signup = () => {
                     <select
                       name='language'
                       onChange={handleLanguageChange}
-                      value={'English'}
+                      value={data.language}
                       className='block appearance-none text-zinc-500 w-full bg-white border border-zinc-400 shadow-inner px-4 py-2 pr-8 rounded'
                     >
                       {languageOptions.map((option, index) => {
