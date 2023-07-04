@@ -3,6 +3,7 @@ import axios from 'axios'
 import Image from 'next/image'
 import Link from 'next/link'
 import backgroundPattern from '../public/vegetablepattern.jpg'
+import { countryOptions, languageOptions } from '@/constants'
 
 const Signup = () => {
   const [data, setData] = useState({
@@ -12,8 +13,7 @@ const Signup = () => {
     language: 'English',
     country: 'USA',
   })
-  const countryOptions = ['USA', 'UK', 'Spain', 'France']
-  const languageOptions = ['English', 'Spanish', 'French']
+
   const [isSignedUp, setIsSignedUp] = useState(false)
   const [submitError, setSubmitError] = useState('')
   const [loading, setLoading] = useState(false)

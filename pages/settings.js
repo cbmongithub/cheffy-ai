@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import Sidebar from '@/components/Sidebar'
+import { countryOptions, languageOptions } from '@/constants'
 
 const Settings = () => {
   const { data: session } = useSession()
@@ -12,8 +13,7 @@ const Settings = () => {
     country: '',
     language: '',
   })
-  const countryOptions = ['USA', 'UK', 'Spain', 'France']
-  const languageOptions = ['English', 'Spanish', 'French']
+
   const router = useRouter()
 
   const handleInputChange = (e) => {
