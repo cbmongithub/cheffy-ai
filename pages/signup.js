@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import axios from 'axios'
 import Image from 'next/image'
 import Link from 'next/link'
 import backgroundPattern from '../public/vegetablepattern.jpg'
@@ -32,20 +31,21 @@ const Signup = () => {
 
   const handleSignup = async (e) => {
     e.preventDefault()
-    console.log('Data being posted to the backend:', data)
-
     try {
       setLoading(true)
-      const apiRes = await axios
-        .post('http://localhost:3000/api/auth/signup', data)
-        .then((data) => {
-          console.log('Axios response:', data)
-          setIsSignedUp(true)
-        })
+      const response = await fetch('api/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+
+      let data = await response.json()
+      data.success ? setIsSignedUp(true) : setSubmitError(data.error)
     } catch (error) {
       console.log(error)
     }
-
     setLoading(false)
   }
 

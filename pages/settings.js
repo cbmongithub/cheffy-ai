@@ -13,7 +13,8 @@ const Settings = () => {
     country: '',
     language: '',
   })
-
+  const [submitError, setSubmitError] = useState('')
+  const [update, setUpdate] = useState('Update')
   const router = useRouter()
 
   const handleInputChange = (e) => {
@@ -69,8 +70,8 @@ const Settings = () => {
       }),
     })
 
-    let answer = await response.json()
-    console.log(answer)
+    let data = await response.json()
+    data.error ? setSubmitError(data.error) : setUpdate('Updated!')
   }
 
   useEffect(() => {
@@ -203,9 +204,10 @@ const Settings = () => {
                 className='ml-3 mt-3 py-3 rounded-xl inline-block text-md px-4 leading-none border text-white bg-purple border-purple hover:border-purpleDark hover:bg-purpleDark hover:text-white'
                 type='submit'
               >
-                Save Changes
+                {update}
               </button>
             </div>
+            {submitError && <p>{submitError}</p>}
           </form>
         </div>
       </div>
