@@ -12,7 +12,7 @@ const ratelimit = new Ratelimit({
 })
 
 const chatGpt = async (req, res) => {
-  const { prompt } = req.body
+  const { prompt, language } = req.body
 
   const payload = {
     model: 'gpt-3.5-turbo-0613',
@@ -23,6 +23,7 @@ const chatGpt = async (req, res) => {
           You are a bot called Cheffy that suggests meal recipes and instruct users on how to make meals from the recipes.
           If the user asks a question for anything other than a recipe, tell them that you are a chef bot that responds with recipe information only.
           Give the user step by step instructions on how to make the meal.
+          Respond with the users language in ${language}.
           Give this response in json format only, and respond with nothing else:
           {
           recipeTitle: Recipe title,

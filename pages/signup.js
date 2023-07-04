@@ -9,8 +9,8 @@ const Signup = () => {
     fullName: '',
     email: '',
     password: '',
-    language: '',
-    country: '',
+    language: 'English',
+    country: 'USA',
   })
   const countryOptions = ['USA', 'UK', 'Spain', 'France']
   const languageOptions = ['English', 'Spanish', 'French']

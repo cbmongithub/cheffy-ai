@@ -19,7 +19,7 @@ const Chat = () => {
   }
 
   useEffect(() => {
-    !session ? router.push('/') : session
+    !session ? router.push('/login') : session
   })
 
   const generateResponse = async (newQuestion, setNewQuestion) => {
@@ -31,6 +31,7 @@ const Chat = () => {
       },
       body: JSON.stringify({
         prompt: newQuestion,
+        language: session.user.language,
       }),
     })
 
