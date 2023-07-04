@@ -26,21 +26,17 @@ const Login = () => {
 
     try {
       setLoading(true)
-
       const loginRes = await loginUser(email, password)
-
       if (loginRes && !loginRes.ok) {
         setSubmitError(loginRes.error || '')
       } else {
         router.push('/chat')
       }
     } catch (error) {
-      if (error instanceof AxiosError) {
-        const errorMsg = error.response?.data?.error
-        setSubmitError(errorMsg)
+      if (error) {
+        console.log(error)
       }
     }
-
     setLoading(false)
   }
 
