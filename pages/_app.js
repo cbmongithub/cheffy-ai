@@ -1,10 +1,13 @@
+import { appWithTranslation } from 'next-i18next'
 import { SessionProvider } from 'next-auth/react'
 import '@/styles/globals.css'
 
-export default function App({ Component, pageProps, session }) {
+const App = ({ Component, pageProps, session }) => {
   return (
     <SessionProvider session={session}>
       <Component {...pageProps} />
     </SessionProvider>
   )
 }
+
+export default appWithTranslation(App)
