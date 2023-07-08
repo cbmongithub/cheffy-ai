@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useTranslation } from 'next-i18next'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import Sidebar from '@/components/Sidebar'
@@ -6,12 +8,13 @@ import useLocalStorage from 'use-local-storage'
 import Image from 'next/image'
 import ScrollableFeed from 'react-scrollable-feed'
 
-const Chat = () => {
+const Chat = (props) => {
   const { data: session } = useSession()
   const [typing, setIsTyping] = useState(false)
   const [storedValues, setStoredValues] = useLocalStorage('chat', [])
   const [newQuestion, setNewQuestion] = useState('')
-  const router = useRouter()
+  //const router = useRouter()
+  const { t } = useTranslation('common')
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -19,7 +22,9 @@ const Chat = () => {
   }
 
   useEffect(() => {
-    !session ? router.push('/login') : session
+    //!session ? router.push('/login') : session
+    console.log(props)
+    console.log(t('greeting'))
   })
 
   const generateResponse = async (newQuestion, setNewQuestion) => {
@@ -80,7 +85,7 @@ const Chat = () => {
                 <div className='flex justify-start mb-4'>
                   <div className='py-3 px-4 bg-purple rounded-lg text-white'>
                     <p className='text-md'>
-                      Welcome
+                      {t('greeting')}
                       {session && session.user.name
                         ? `, ${session.user.name
                             .split(' ')
@@ -92,8 +97,7 @@ const Chat = () => {
                             .slice(0, -1)
                             .join(' ')}`
                         : ''}
-                      ! I am Cheffy. My job is to provide you with any recipe
-                      that you want. What are you in the mood for?
+                      ?
                     </p>
                   </div>
                   <Image
@@ -265,3 +269,12 @@ const AnswerSection = ({ storedValues }) => {
 }
 
 export default Chat
+
+export async function getStaticProps({ locale }) {
+  console.log(locale)
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common'])),
+    },
+  }
+}
