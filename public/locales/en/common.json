@@ -1,3 +1,17 @@
 {
-  "greeting": "Welcome! I am Cheffy. My job is to provide you with any recipe that you want. What are you in the mood for"
+  "chat": {
+    "greeting": "Welcome! I am Cheffy. My job is to provide you with any recipe that you want. What are you in the mood for",
+    "placeholder": "Ask me for any recipe",
+    "send": "SEND"
+  },
+  "settings": {
+    "title": "ACCOUNT SETTINGS",
+    "full-name": "FULL NAME",
+    "email-address": "EMAIL ADDRESS",
+    "password": "PASSWORD",
+    "country": "COUNTRY",
+    "language": "LANGUAGE",
+    "update": "UPDATE",
+    "updated": "UPDATED"
+  }
 }

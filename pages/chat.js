@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
 import { useSession } from 'next-auth/react'
-import { useRouter } from 'next/router'
+//import { useRouter } from 'next/router'
 import Sidebar from '@/components/Sidebar'
 import useLocalStorage from 'use-local-storage'
 import Image from 'next/image'
@@ -21,11 +21,10 @@ const Chat = (props) => {
     setNewQuestion('')
   }
 
-  useEffect(() => {
-    //!session ? router.push('/login') : session
-    console.log(props)
-    console.log(t('greeting'))
-  })
+  //useEffect(() => {
+  // !session ? router.push('/login') : session
+  //
+  //})
 
   const generateResponse = async (newQuestion, setNewQuestion) => {
     setIsTyping(true)
@@ -85,7 +84,7 @@ const Chat = (props) => {
                 <div className='flex justify-start mb-4'>
                   <div className='py-3 px-4 bg-purple rounded-lg text-white'>
                     <p className='text-md'>
-                      {t('greeting')}
+                      {t('chat.greeting')}
                       {session && session.user.name
                         ? `, ${session.user.name
                             .split(' ')
@@ -147,7 +146,7 @@ const Chat = (props) => {
             ease-in-out
             m-0
               focus:border-purple focus:outline-none py-4 px-4 rounded-xl'
-          placeholder='Ask me for any recipe'
+          placeholder={t('chat.placeholder')}
           value={newQuestion}
           onChange={(e) => setNewQuestion(e.target.value)}
           type='text'
@@ -158,7 +157,7 @@ const Chat = (props) => {
           className='w-1/4 ml-5 py-5 rounded-xl inline-block text-md px-4 leading-none border text-white bg-purple border-purple hover:border-purpleDark hover:bg-purpleDark hover:text-white'
           onClick={() => generateResponse(newQuestion, setNewQuestion)}
         >
-          SEND
+          {t('chat.send')}
         </button>
       </form>
     </>
@@ -168,16 +167,6 @@ const Chat = (props) => {
 const AnswerSection = ({ storedValues }) => {
   const [saved, setSaved] = useState('Save')
   const { data: session } = useSession()
-  const generateFirstLine = (recipe) => {
-    const firstLine = [
-      `Here is a recipe for ${recipe}`,
-      `Nice choice! Here's one recipe I know for ${recipe}`,
-      `This sounds yummy. Here is a recipe for ${recipe}`,
-      `I personally love ${recipe}, it's the best! Here is the best recipe I know`,
-    ]
-    const randomIndex = Math.floor(Math.random() * firstLine.length)
-    return firstLine[randomIndex]
-  }
 
   const saveRecipe = async (
     email,
@@ -202,7 +191,6 @@ const AnswerSection = ({ storedValues }) => {
       }),
     })
     let answer = await response.json()
-    console.log(answer)
     setSaved(answer.text)
   }
   return (
@@ -221,10 +209,6 @@ const AnswerSection = ({ storedValues }) => {
                 </div>
                 <div className='flex justify-start mb-4'>
                   <div className='py-3 px-4 bg-purple rounded-lg text-white'>
-                    <p>
-                      {generateFirstLine(answer.recipeTitle.toLowerCase())}:
-                    </p>
-                    <br />
                     <p className='font-bold'>{answer.recipeTitle}</p>
                     <p>{answer.recipeDescription}</p>
                     <br />
@@ -270,11 +254,8 @@ const AnswerSection = ({ storedValues }) => {
 
 export default Chat
 
-export async function getStaticProps({ locale }) {
-  console.log(locale)
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ['common'])),
-    },
-  }
-}
+export const getStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+})

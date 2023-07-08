@@ -1,3 +1,17 @@
 {
-  "greeting": "¡Bienvenido! Soy Cheffy. Mi trabajo es proporcionarte cualquier receta que quieras. ¿Para qué estás de humor"
+  "chat": {
+    "greeting": "¡Bienvenido! Soy Cheffy. Mi trabajo es proporcionarte cualquier receta que quieras. ¿Para qué estás de humor",
+    "placeholder": "Pídeme cualquier receta",
+    "send": "ENVIAR"
+  },
+  "settings": {
+    "title": "CONFIGURACIONES DE LA CUENTA",
+    "full-name": "NOMBRE COMPLETO",
+    "email-address": "DIRECCIÓN DE CORREO ELECTRÓNICO",
+    "password": "CONTRASEÑA",
+    "country": "PAÍS",
+    "language": "IDIOMA",
+    "update": "ACTUALIZAR",
+    "updated": "ACTUALIZADO"
+  }
 }

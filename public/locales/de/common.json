@@ -1,3 +1,17 @@
 {
-  "greeting": "Willkommen! Ich bin Cheffy. Meine Aufgabe ist es, Ihnen jedes gewünschte Rezept zu liefern. Für was bist du in Stimmung"
+  "chat": {
+    "greeting": "Willkommen! Ich bin Cheffy. Meine Aufgabe ist es, Ihnen jedes gewünschte Rezept zu liefern. Für was bist du in Stimmung",
+    "placeholder": "Fragen Sie mich nach einem Rezept",
+    "send": "SCHICKEN"
+  },
+  "settings": {
+    "title": "ACCOUNT EINSTELLUNGEN",
+    "full-name": "VOLLSTÄNDIGER NAME",
+    "email-address": "E-MAIL-ADDRESSE",
+    "password": "PASSWORT",
+    "country": "LAND",
+    "language": "SPRACHE",
+    "update": "AKTUALISIEREN",
+    "updated": "AKTUALISIERT"
+  }
 }

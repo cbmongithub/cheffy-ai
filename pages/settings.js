@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useTranslation } from 'next-i18next'
 import Sidebar from '@/components/Sidebar'
 import { countryOptions, languageOptions } from '@/constants'
 
@@ -16,6 +18,7 @@ const Settings = () => {
   const [submitError, setSubmitError] = useState('')
   const [update, setUpdate] = useState('Update')
   const router = useRouter()
+  const { t } = useTranslation('common')
 
   const handleInputChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value })
@@ -76,7 +79,8 @@ const Settings = () => {
 
   useEffect(() => {
     if (!session) {
-      router.push('/login')
+      //router.push('/login')
+      console.log(session)
     } else {
       getUser(session.user.email)
     }
@@ -87,7 +91,7 @@ const Settings = () => {
       <Sidebar />
       <div className='mt-[100px] md:mt-0 py-16 w-full md:w-4/6 flex flex-row justify-center items-center md:fixed md:top-0 md:right-0 lg:w-5/6'>
         <div className='w-5/6 md:w-4/6 p-6 mx-auto bg-white rounded-lg shadow-2xl'>
-          <h2 className='text-2xl text-zinc-900'>Account Settings</h2>
+          <h2 className='text-2xl text-zinc-900'>{t('settings.title')}</h2>
           <form
             className='mt-6 border-t border-zinc-400 pt-4'
             onSubmit={handleSubmit}
@@ -100,7 +104,7 @@ const Settings = () => {
                       htmlFor='fullName'
                       className='block uppercase tracking-wide text-zinc-700 text-xs font-bold mb-2'
                     >
-                      Full Name
+                      {t('settings.full-name')}
                     </label>
                     <input
                       name='fullName'
@@ -118,7 +122,7 @@ const Settings = () => {
                   className='block uppercase tracking-wide text-zinc-700 text-xs font-bold mb-2'
                   htmlFor='email'
                 >
-                  email address
+                  {t('settings.email-address')}
                 </label>
                 <input
                   className='appearance-none block w-full bg-gray-50 cursor-disabled text-gray-400 border border-zinc-400 shadow-inner rounded-md py-3 px-4 leading-tight'
@@ -134,7 +138,7 @@ const Settings = () => {
                   htmlFor='password'
                   className='block uppercase tracking-wide text-zinc-700 text-xs font-bold mb-2'
                 >
-                  password
+                  {t('settings.password')}
                 </label>
                 <div className='flex flex-row justify-between'>
                   <input
@@ -152,7 +156,7 @@ const Settings = () => {
                   htmlFor='country'
                   className='block uppercase tracking-wide text-zinc-700 text-xs font-bold mb-2'
                 >
-                  country
+                  {t('settings.country')}
                 </label>
                 <div className='flex-shrink w-full inline-block relative'>
                   <select
@@ -177,7 +181,7 @@ const Settings = () => {
               </div>
               <div className='w-full md:w-1/2 px-3 mb-6'>
                 <label className='block uppercase tracking-wide text-zinc-700 text-xs font-bold mb-2'>
-                  Language
+                  {t('settings.language')}
                 </label>
                 <div className='flex-shrink w-full inline-block relative'>
                   <select
@@ -204,7 +208,7 @@ const Settings = () => {
                 className='ml-3 mt-3 py-3 rounded-xl inline-block text-md px-4 leading-none border text-white bg-purple border-purple hover:border-purpleDark hover:bg-purpleDark hover:text-white'
                 type='submit'
               >
-                {update}
+                {t('settings.update-button')}
               </button>
             </div>
             {submitError && <p>{submitError}</p>}
@@ -216,3 +220,9 @@ const Settings = () => {
 }
 
 export default Settings
+
+export const getStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+})
