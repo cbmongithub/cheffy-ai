@@ -16,7 +16,7 @@ const Settings = () => {
     language: '',
   })
   const [submitError, setSubmitError] = useState('')
-  const [update, setUpdate] = useState('Update')
+  const [update, setUpdate] = useState(false)
   const router = useRouter()
   const { t } = useTranslation('common')
 
@@ -74,7 +74,7 @@ const Settings = () => {
     })
 
     let data = await response.json()
-    data.error ? setSubmitError(data.error) : setUpdate('Updated!')
+    data.error ? setSubmitError(data.error) : setUpdate(true)
   }
 
   useEffect(() => {
@@ -208,7 +208,7 @@ const Settings = () => {
                 className='ml-3 mt-3 py-3 rounded-xl inline-block text-md px-4 leading-none border text-white bg-purple border-purple hover:border-purpleDark hover:bg-purpleDark hover:text-white'
                 type='submit'
               >
-                {t('settings.update-button')}
+                {update ? t('settings.updated') : t('settings.update')}
               </button>
             </div>
             {submitError && <p>{submitError}</p>}
