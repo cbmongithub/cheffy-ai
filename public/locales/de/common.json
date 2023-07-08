@@ -2,7 +2,9 @@
   "chat": {
     "greeting": "Willkommen! Ich bin Cheffy. Meine Aufgabe ist es, Ihnen jedes gewünschte Rezept zu liefern. Für was bist du in Stimmung",
     "placeholder": "Fragen Sie mich nach einem Rezept",
-    "send": "SCHICKEN"
+    "send": "SCHICKEN",
+    "save": "SPEICHERN",
+    "saved": "GERETTET"
   },
   "settings": {
     "title": "ACCOUNT EINSTELLUNGEN",

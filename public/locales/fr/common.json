@@ -2,7 +2,9 @@
   "chat": {
     "greeting": "Accueillir! Je suis Cheffy. Mon travail consiste à vous proposer toutes les recettes que vous souhaitez. Qu'aimerais tu faire",
     "placeholder": "Demandez moi n'importe quelle recette",
-    "send": "ENVOYER"
+    "send": "ENVOYER",
+    "save": "SAUVEGARDER",
+    "saved": "ENREGISTRÉ"
   },
   "settings": {
     "title": "PARAMÈTRES DU COMPTE",

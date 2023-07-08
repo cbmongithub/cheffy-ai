@@ -2,7 +2,9 @@
   "chat": {
     "greeting": "Welcome! I am Cheffy. My job is to provide you with any recipe that you want. What are you in the mood for",
     "placeholder": "Ask me for any recipe",
-    "send": "SEND"
+    "send": "SEND",
+    "save": "SAVE",
+    "saved": "SAVED"
   },
   "settings": {
     "title": "ACCOUNT SETTINGS",

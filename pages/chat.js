@@ -165,7 +165,7 @@ const Chat = (props) => {
 }
 
 const AnswerSection = ({ storedValues }) => {
-  const [saved, setSaved] = useState('Save')
+  const [saved, setSaved] = useState(false)
   const { data: session } = useSession()
 
   const saveRecipe = async (
@@ -191,7 +191,7 @@ const AnswerSection = ({ storedValues }) => {
       }),
     })
     let answer = await response.json()
-    setSaved(answer.text)
+    answer.text ? setSaved(true) : setSaved(false)
   }
   return (
     <>
@@ -233,7 +233,7 @@ const AnswerSection = ({ storedValues }) => {
                         )
                       }}
                     >
-                      {saved}
+                      {saved ? t('chat.saved') : t('chat.save')}
                     </button>
                   </div>
                   <Image
