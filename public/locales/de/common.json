@@ -15,5 +15,27 @@
     "language": "SPRACHE",
     "update": "AKTUALISIEREN",
     "updated": "AKTUALISIERT"
+  },
+  "sideMenu": {
+    "chat": "Plaudern",
+    "recipes": "Rezepte",
+    "settings": "Einstellungen",
+    "logout": "Ausloggen"
+  },
+  "mainMenu": {
+    "about": "Um",
+    "pricing": "Preisgestaltung",
+    "contact": "Kontakt",
+    "login": "Anmeldung",
+    "logout": "Ausloggen"
+  },
+  "hero": {
+    "title": "Wir stellen vor",
+    "paragraph": "Cheffy startet bald! Tragen Sie sich auf die Warteliste ein, um die Beta auszuprobieren, bevor sie öffentlich verfügbar ist.",
+    "placeholder": "Geben sie ihre E-Mail Adresse ein",
+    "join-waitlist": "Treten Sie der Warteliste bei"
+  },
+  "footer": {
+    "copyright": "Alle Rechte vorbehalten."
   }
 }

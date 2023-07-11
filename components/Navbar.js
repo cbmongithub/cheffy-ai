@@ -3,7 +3,7 @@ import { useSession, signOut } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-const Navbar = () => {
+const Navbar = ({ about, pricing, contact, login, logout }) => {
   const { data: session } = useSession()
   const [show, setShow] = useState(false)
   return (
@@ -28,7 +28,7 @@ const Navbar = () => {
                 type='button'
                 className='text-white bg-purpleDark hover:text-purple hover:bg-white focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center mr-4'
               >
-                Login
+                {login}
               </button>
             </Link>
           ) : (
@@ -42,7 +42,7 @@ const Navbar = () => {
                 localStorage.clear()
               }}
             >
-              Logout
+              {logout}
             </button>
           )}
           <button
@@ -73,17 +73,17 @@ const Navbar = () => {
           <ul className='flex flex-col justify-center items-center p-4 md:p-0 mt-4 font-medium rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0  dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700'>
             <li className='hover:bg-purpleDark rounded-lg w-full text-center'>
               <a href='#' className='block py-2 pl-3 pr-4 text-white'>
-                About
+                {about}
               </a>
             </li>
             <li className='hover:bg-purpleDark rounded-lg w-full text-center'>
               <a href='#' className='block py-2 pl-3 pr-4 text-white'>
-                Pricing
+                {pricing}
               </a>
             </li>
             <li className='hover:bg-purpleDark rounded-lg w-full text-center'>
               <a href='#' className='block py-2 pl-3 pr-4 text-white'>
-                Contact
+                {contact}
               </a>
             </li>
           </ul>

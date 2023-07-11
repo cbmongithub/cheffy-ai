@@ -15,5 +15,27 @@
     "language": "LANGUE",
     "update": "MISE À JOUR",
     "updated": "MIS À JOUR"
+  },
+  "sideMenu": {
+    "chat": "Discuter",
+    "recipes": "Recettes",
+    "settings": "Paramètres",
+    "logout": "Se déconnecter"
+  },
+  "mainMenu": {
+    "about": "À propos",
+    "pricing": "Tarification",
+    "contact": "Contact",
+    "login": "Connexion",
+    "logout": "Se déconnecter"
+  },
+  "hero": {
+    "title": "Présentation",
+    "paragraph": "Cheffy se lance bientôt ! Rejoignez la liste d'attente pour essayer la version bêta avant qu'elle ne soit accessible au public.",
+    "placeholder": "Entrer votre Email",
+    "join-waitlist": "Rejoindre la liste d'attente"
+  },
+  "footer": {
+    "copyright": "Tous les droits sont réservés."
   }
 }

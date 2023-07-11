@@ -15,5 +15,27 @@
     "language": "IDIOMA",
     "update": "ACTUALIZAR",
     "updated": "ACTUALIZADO"
+  },
+  "sideMenu": {
+    "chat": "Charlar",
+    "recipes": "Recetas",
+    "settings": "Ajustes",
+    "logout": "Cerrar sesión"
+  },
+  "mainMenu": {
+    "about": "Sobre",
+    "pricing": "Precios",
+    "contact": "Contacto",
+    "login": "Acceso",
+    "logout": "Cerrar sesión"
+  },
+  "hero": {
+    "title": "Introduciendo",
+    "paragraph": "¡Cheffy se lanzará pronto! Únase a la lista de espera para probar la versión beta antes de que esté disponible públicamente.",
+    "placeholder": "Introduce tu correo electrónico",
+    "join-waitlist": "Unirse a la lista de espera"
+  },
+  "footer": {
+    "copyright": "Reservados todos los derechos."
   }
 }

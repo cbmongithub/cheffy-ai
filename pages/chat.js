@@ -75,7 +75,12 @@ const Chat = (props) => {
 
   return (
     <>
-      <Sidebar />
+      <Sidebar
+        chat={t('sideMenu.chat')}
+        recipes={t('sideMenu.recipes')}
+        settings={t('sideMenu.settings')}
+        logout={t('sideMenu.logout')}
+      />
       <div className='flex flex-row md:w-4/6 lg:w-5/6 h-[87%] md:h-[92%] absolute top-0 right-0 mx-auto shadow-2xl'>
         <ScrollableFeed className='mt-[89px] md:mt-0 md:pb-0'>
           <div className='flex flex-row justify-between rounded-b-md md:mt-0'>

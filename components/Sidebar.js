@@ -7,7 +7,7 @@ import { BiFoodMenu, BiLogOut } from 'react-icons/bi'
 import { CiSettings } from 'react-icons/ci'
 import { BsChatDots } from 'react-icons/bs'
 
-const Sidebar = () => {
+const Sidebar = ({ chat, recipes, settings, logout }) => {
   const [show, setShow] = useState(false)
   const { data: session } = useSession()
   return (
@@ -34,7 +34,7 @@ const Sidebar = () => {
               className='text-white bg-purpleDark hover:text-purple hover:bg-white focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center mr-4'
               onClick={() => signOut('github')}
             >
-              Logout
+              {logout}
             </button>
             <button
               type='button'
@@ -64,7 +64,7 @@ const Sidebar = () => {
             <ul className='flex flex-col justify-center items-center p-4 md:p-0 mt-4 font-medium rounded-lg'>
               <li className='hover:bg-purpleDark rounded-lg w-full text-center'>
                 <Link href='/chat' className='block py-2 pl-3 pr-4 text-white'>
-                  Chat
+                  {chat}
                 </Link>
               </li>
               <li className='hover:bg-purpleDark rounded-lg w-full text-center'>
@@ -72,7 +72,7 @@ const Sidebar = () => {
                   href='/recipes'
                   className='block py-2 pl-3 pr-4 text-white'
                 >
-                  Recipes
+                  {recipes}
                 </Link>
               </li>
               <li className='hover:bg-purpleDark rounded-lg w-full text-center'>
@@ -80,7 +80,7 @@ const Sidebar = () => {
                   href='/settings'
                   className='block py-2 pl-3 pr-4 text-white'
                 >
-                  Settings
+                  {settings}
                 </Link>
               </li>
             </ul>
@@ -117,7 +117,7 @@ const Sidebar = () => {
                 className='flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700'
               >
                 <BsChatDots />
-                <span className='flex-1 ml-3 whitespace-nowrap'>Chat</span>
+                <span className='flex-1 ml-3 whitespace-nowrap'>{chat}</span>
               </Link>
             </li>
             <li>
@@ -126,7 +126,7 @@ const Sidebar = () => {
                 className='flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700'
               >
                 <BiFoodMenu />
-                <span className='flex-1 ml-3 whitespace-nowrap'>Recipes</span>
+                <span className='flex-1 ml-3 whitespace-nowrap'>{recipes}</span>
               </Link>
             </li>
             <li>
@@ -135,7 +135,9 @@ const Sidebar = () => {
                 className='flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700'
               >
                 <CiSettings />
-                <span className='flex-1 ml-3 whitespace-nowrap'>Settings</span>
+                <span className='flex-1 ml-3 whitespace-nowrap'>
+                  {settings}
+                </span>
               </Link>
             </li>
             <li>
@@ -150,7 +152,7 @@ const Sidebar = () => {
                 className='flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700'
               >
                 <BiLogOut />
-                <span className='flex-1 ml-3 whitespace-nowrap'>Logout</span>
+                <span className='flex-1 ml-3 whitespace-nowrap'>{logout}</span>
               </Link>
             </li>
           </ul>

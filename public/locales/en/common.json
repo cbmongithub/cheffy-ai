@@ -15,5 +15,27 @@
     "language": "LANGUAGE",
     "update": "UPDATE",
     "updated": "UPDATED"
+  },
+  "sideMenu": {
+    "chat": "Chat",
+    "recipes": "Recipes",
+    "settings": "Settings",
+    "logout": "Logout"
+  },
+  "mainMenu": {
+    "about": "About",
+    "pricing": "Pricing",
+    "contact": "Contact",
+    "login": "Login",
+    "logout": "Logout"
+  },
+  "hero": {
+    "title": "Introducing",
+    "paragraph": "Cheffy is launching soon! Join the waitlist to try the beta before it is publicly available.",
+    "placeholder": "Enter your email",
+    "join-waitlist": "Join Waitlist"
+  },
+  "footer": {
+    "copyright": "All rights reserved."
   }
 }
