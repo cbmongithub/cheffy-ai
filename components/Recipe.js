@@ -5,11 +5,16 @@ import relativeTime from 'dayjs/plugin/relativeTime'
 dayjs.extend(relativeTime)
 
 const Recipe = ({
+  recipe,
   timestamp,
   title,
   description,
+  ingredientsTitle,
   ingredients,
+  instructionsTitle,
   instructions,
+  viewRecipe,
+  showLess,
 }) => {
   const [showRecipe, setShowRecipe] = useState(false)
   return (
@@ -29,7 +34,7 @@ const Recipe = ({
             ></path>
             <path d='M15 7h1a2 2 0 012 2v5.5a1.5 1.5 0 01-3 0V7z'></path>
           </svg>
-          <p>Recipe</p>
+          <p>{recipe}</p>
         </span>
         <span className='text-sm'>
           {`${dayjs(timestamp ? timestamp : 1688320988).fromNow(true)} ago`}
@@ -59,18 +64,18 @@ const Recipe = ({
           className='inline-flex items-center font-medium text-zinc-800 dark:text-zinc-50 hover:underline cursor-pointer'
           onClick={() => setShowRecipe(!showRecipe)}
         >
-          {showRecipe ? 'Show Less' : 'View Recipe'}
+          {showRecipe ? { showLess } : { viewRecipe }}
         </a>
       </div>
       {showRecipe ? (
         <div className='text-zinc-900 py-5'>
           <br />
-          <p className='font-bold'>Ingredients:</p>
+          <p className='font-bold'>{ingredientsTitle}:</p>
           {ingredients.map((ingredient, i) => {
             return <p key={i}>- {ingredient}</p>
           })}
           <br />
-          <p className='font-bold'>Instructions:</p>
+          <p className='font-bold'>{instructionsTitle}:</p>
           {instructions.map((instruction, i) => {
             return (
               <p key={i}>

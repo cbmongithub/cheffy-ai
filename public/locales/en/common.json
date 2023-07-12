@@ -38,6 +38,11 @@
     "join-waitlist": "Join Waitlist"
   },
   "recipes": {
+    "recipe": "Recipe",
+    "view-recipe": "View Recipe",
+    "show-less": "Show Less",
+    "ingredients": "Ingredients",
+    "instructions": "Instructions",
     "not-found": "No saved recipes found!",
     "click": "Click",
     "here": "here",

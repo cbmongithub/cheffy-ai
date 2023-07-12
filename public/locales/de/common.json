@@ -38,6 +38,11 @@
     "join-waitlist": "Treten Sie der Warteliste bei"
   },
   "recipes": {
+    "recipe": "Rezept",
+    "view-recipe": "Rezept ansehen",
+    "show-less": "Zeige weniger",
+    "ingredients": "Zutaten",
+    "instructions": "Anweisungen",
     "not-found": "Keine gespeicherten Rezepte gefunden!",
     "click": "Klicken",
     "here": "hier",

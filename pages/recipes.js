@@ -51,11 +51,16 @@ const Recipes = () => {
               return (
                 <Recipe
                   key={i}
+                  recipe={t('recipes.recipe')}
                   timestamp={recipe.timestamp}
                   title={recipe.title}
                   description={recipe.description}
+                  ingredientsTitle={t('recipes.ingredients')}
                   ingredients={recipe.ingredients}
+                  instructionsTitle={t('recipes.instructions')}
                   instructions={recipe.instructions}
+                  viewRecipe={t('recipes.view-recipe')}
+                  showLess={t('recipes.show-less')}
                 />
               )
             })
