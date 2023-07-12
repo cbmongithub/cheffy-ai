@@ -35,6 +35,39 @@
     "placeholder": "Enter your email",
     "join-waitlist": "Join Waitlist"
   },
+  "recipes": {
+    "not-found": "No saved recipes found!",
+    "click": "Click",
+    "here": "here",
+    "return-to-chat": "to return to chat"
+  },
+  "login": {
+    "title": "Login",
+    "login-with-github": "Login with Github",
+    "login-with-google": "Login with Google",
+    "email": "EMAIL",
+    "password": "PASSWORD",
+    "remember-me": "Remember me",
+    "sign-in": "Sign in",
+    "no-account": "Don't have an account yet?",
+    "forgot-password": "Forgot password?",
+    "sign-up": "Sign up"
+  },
+  "signUp": {
+    "title": "Sign Up",
+    "full-name": "FULL NAME",
+    "email": "EMAIL",
+    "password": "PASSWORD",
+    "country": "COUNTRY",
+    "language": "LANGUAGE",
+    "sign-up": "Sign Up",
+    "has-account": "Already have an account?",
+    "login": "Login",
+    "success": "Success!",
+    "click": "Click",
+    "here": "here",
+    "return-to-login": "to return to the login page"
+  },
   "footer": {
     "copyright": "All rights reserved."
   }

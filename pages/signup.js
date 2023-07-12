@@ -1,10 +1,13 @@
 import { useState } from 'react'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useTranslation } from 'next-i18next'
 import Image from 'next/image'
 import Link from 'next/link'
 import backgroundPattern from '../public/vegetablepattern.jpg'
 import { countryOptions, languageOptions } from '@/constants'
 
 const Signup = () => {
+  const { t } = useTranslation('common')
   const [data, setData] = useState({
     fullName: '',
     email: '',
@@ -12,7 +15,6 @@ const Signup = () => {
     language: 'English',
     country: 'United States of America',
   })
-
   const [isSignedUp, setIsSignedUp] = useState(false)
   const [submitError, setSubmitError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -73,7 +75,7 @@ const Signup = () => {
           <div className='w-full bg-white rounded-lg dark:border md:mt-0 shadow-xl sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700'>
             <div className='p-6 space-y-4 md:space-y-6 sm:p-8'>
               <h1 className='text-xl text-center font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white'>
-                Sign Up
+                {t('signUp.title')}
               </h1>
               <hr />
               <form className='space-y-4 md:space-y-6' onSubmit={handleSignup}>
@@ -82,7 +84,7 @@ const Signup = () => {
                     htmlFor='fullName'
                     className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
                   >
-                    Full Name
+                    {t('signUp.full-name')}
                   </label>
                   <input
                     type='text'
@@ -108,7 +110,7 @@ const Signup = () => {
                     htmlFor='email'
                     className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
                   >
-                    Email
+                    {t('signUp.email')}
                   </label>
                   <input
                     type='email'
@@ -134,7 +136,7 @@ const Signup = () => {
                     htmlFor='password'
                     className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
                   >
-                    Password
+                    {t('signUp.password')}
                   </label>
                   <input
                     type='password'
@@ -160,7 +162,7 @@ const Signup = () => {
                     htmlFor='country'
                     className='block uppercase tracking-wide text-zinc-700 text-xs font-bold mb-2'
                   >
-                    country
+                    {t('signUp.country')}
                   </label>
                   <div className='flex-shrink w-full inline-block relative'>
                     <select
@@ -190,7 +192,7 @@ const Signup = () => {
                 </div>
                 <div className='w-full mb-6'>
                   <label className='block uppercase tracking-wide text-zinc-700 text-xs font-bold mb-2'>
-                    Language
+                    {t('signUp.language')}
                   </label>
                   <div className='flex-shrink w-full inline-block relative'>
                     <select
@@ -223,15 +225,15 @@ const Signup = () => {
                   className='w-full hover:shadow-lg text-white bg-purple hover:bg-purpleDark focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center'
                   disabled={loading}
                 >
-                  Sign Up
+                  {t('signUp.sign-up')}
                 </button>
                 <p className='text-sm font-light text-gray-700 dark:text-gray-400'>
-                  Already have an account?{' '}
+                  {t('signUp.has-account')}{' '}
                   <Link
                     href='/login'
                     className='font-medium text-purple hover:underline dark:text-primary-500'
                   >
-                    Login
+                    {t('signUp.login')}
                   </Link>
                 </p>
                 {submitError && <p>{submitError}</p>}
@@ -242,17 +244,17 @@ const Signup = () => {
           <div className='w-full bg-white rounded-lg dark:border md:mt-0 shadow-xl sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700'>
             <div className='p-6 space-y-4 md:space-y-6 sm:p-8 text-center'>
               <h1 className='text-xl text-center font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white'>
-                Success!
+                {t('signUp.success')}
               </h1>
               <p className='mt-5 text-md font-normal text-gray-700 dark:text-gray-400'>
-                Click{' '}
+                {t('signUp.click')}{' '}
                 <Link
                   href='/login'
                   className='font-medium text-purple hover:underline dark:text-primary-500'
                 >
-                  here
+                  {t('signUp.here')}
                 </Link>{' '}
-                to return to the login page
+                {t('signUp.return-to-login')}
                 {`, ${data.fullName.split(' ').slice(0, -1).join(' ')}`}
               </p>
             </div>
@@ -264,3 +266,9 @@ const Signup = () => {
 }
 
 export default Signup
+
+export const getStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+})

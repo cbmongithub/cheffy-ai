@@ -35,6 +35,39 @@
     "placeholder": "Introduce tu correo electrónico",
     "join-waitlist": "Unirse a la lista de espera"
   },
+  "recipes": {
+    "not-found": "¡No se han encontrado recetas guardadas!",
+    "click": "Hacer clic",
+    "here": "aquí",
+    "return-to-chat": "para volver a chatear"
+  },
+  "login": {
+    "title": "Acceso",
+    "login-with-github": "Iniciar sesión con Github",
+    "login-with-google": "Iniciar sesión con Google",
+    "email": "CORREO ELECTRÓNICO",
+    "password": "CONTRASEÑA",
+    "remember-me": "Acuérdate de mí",
+    "sign-in": "Iniciar sesión",
+    "no-account": "¿Aún no tienes una cuenta?",
+    "forgot-password": "¿Has olvidado tu contraseña?",
+    "sign-up": "Inscribirse"
+  },
+  "signUp": {
+    "title": "Inscribirse",
+    "full-name": "NOMBRE COMPLETO",
+    "email": "CORREO ELECTRÓNICO",
+    "password": "CONTRASEÑA",
+    "country": "PAÍS",
+    "language": "IDIOMA",
+    "sign-up": "Inscribirse",
+    "has-account": "¿Ya tienes una cuenta?",
+    "login": "Acceso",
+    "success": "¡Éxito!",
+    "click": "Hacer clic",
+    "here": "aquí",
+    "return-to-login": "para volver a la página de inicio de sesión"
+  },
   "footer": {
     "copyright": "Reservados todos los derechos."
   }
