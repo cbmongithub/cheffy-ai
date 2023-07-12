@@ -171,6 +171,7 @@ const Chat = (props) => {
 
 const AnswerSection = ({ storedValues }) => {
   const [saved, setSaved] = useState(false)
+  const { t } = useTranslation('common')
   const { data: session } = useSession()
 
   const saveRecipe = async (
@@ -217,12 +218,12 @@ const AnswerSection = ({ storedValues }) => {
                     <p className='font-bold'>{answer.recipeTitle}</p>
                     <p>{answer.recipeDescription}</p>
                     <br />
-                    <p className='font-bold'>Ingredients:</p>
+                    <p className='font-bold'>{t('chat.ingredients')}:</p>
                     {answer.ingredients.map((ingredient, i) => {
                       return <p key={i}>- {ingredient}</p>
                     })}
                     <br />
-                    <p className='font-bold'>Instructions:</p>
+                    <p className='font-bold'>{t('chat.instructions')}:</p>
                     <p>{answer.instructions}</p>
                     <br />
                     <button

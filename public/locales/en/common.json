@@ -2,6 +2,8 @@
   "chat": {
     "greeting": "Welcome! I am Cheffy. My job is to provide you with any recipe that you want. What are you in the mood for",
     "placeholder": "Ask me for any recipe",
+    "ingredients": "Ingredients",
+    "instructions": "Instructions",
     "send": "SEND",
     "save": "SAVE",
     "saved": "SAVED"

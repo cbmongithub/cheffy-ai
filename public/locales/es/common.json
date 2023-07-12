@@ -2,6 +2,8 @@
   "chat": {
     "greeting": "¡Bienvenido! Soy Cheffy. Mi trabajo es proporcionarte cualquier receta que quieras. ¿Para qué estás de humor",
     "placeholder": "Pídeme cualquier receta",
+    "ingredients": "Ingredientes",
+    "instructions": "Instrucciones",
     "send": "ENVIAR",
     "save": "AHORRAR",
     "saved": "SALVADO"

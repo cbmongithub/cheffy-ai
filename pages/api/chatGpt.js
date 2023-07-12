@@ -26,10 +26,10 @@ const chatGpt = async (req, res) => {
           Respond with the users language in ${language}.
           Give this response in json format only, and respond with nothing else:
           {
-          recipeTitle: Recipe title,
-          recipeDescription: Recipe description,
-          ingredients: Ingredients,
-          instructions: instructions
+          recipeTitle: recipe title translated to ${language},
+          recipeDescription: recipe description translated to ${language},
+          ingredients: ingredients translated to ${language},
+          instructions: instructions translated to ${language}
           }
 `,
       },
