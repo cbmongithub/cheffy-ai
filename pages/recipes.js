@@ -28,13 +28,13 @@ const Recipes = () => {
     setAllRecipes(recipes.recipes)
   }
 
-  //useEffect(() => {
-  //  if (!session) {
-  //    router.push('/login')
-  //  } else {
-  //    getRecipes(session.user.email)
-  //  }
-  //}, [router, session])
+  useEffect(() => {
+    if (!session) {
+      router.push('/login')
+    } else {
+      getRecipes(session.user.email)
+    }
+  }, [router, session])
 
   return (
     <>

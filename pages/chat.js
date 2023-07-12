@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
 import { useSession } from 'next-auth/react'
-//import { useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 import Sidebar from '@/components/Sidebar'
 import useLocalStorage from 'use-local-storage'
 import Image from 'next/image'
@@ -13,7 +13,7 @@ const Chat = (props) => {
   const [typing, setIsTyping] = useState(false)
   const [storedValues, setStoredValues] = useLocalStorage('chat', [])
   const [newQuestion, setNewQuestion] = useState('')
-  //const router = useRouter()
+  const router = useRouter()
   const { t } = useTranslation('common')
 
   const handleSubmit = (e) => {
@@ -21,10 +21,10 @@ const Chat = (props) => {
     setNewQuestion('')
   }
 
-  //useEffect(() => {
-  // !session ? router.push('/login') : session
-  //
-  //})
+  useEffect(() => {
+    !session ? router.push('/login') : session
+    console.log(session)
+  })
 
   const generateResponse = async (newQuestion, setNewQuestion) => {
     setIsTyping(true)
