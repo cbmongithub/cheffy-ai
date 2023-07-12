@@ -64,7 +64,7 @@ const Recipe = ({
           className='inline-flex items-center font-medium text-zinc-800 dark:text-zinc-50 hover:underline cursor-pointer'
           onClick={() => setShowRecipe(!showRecipe)}
         >
-          {showRecipe ? { showLess } : { viewRecipe }}
+          {showRecipe ? showLess : viewRecipe}
         </a>
       </div>
       {showRecipe ? (
