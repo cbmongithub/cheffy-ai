@@ -88,7 +88,12 @@ const Settings = () => {
 
   return (
     <>
-      <Sidebar />
+      <Sidebar
+        chat={t('sideMenu.chat')}
+        recipes={t('sideMenu.recipes')}
+        settings={t('sideMenu.settings')}
+        logout={t('sideMenu.logout')}
+      />
       <div className='mt-[100px] md:mt-0 py-16 w-full md:w-4/6 flex flex-row justify-center items-center md:fixed md:top-0 md:right-0 lg:w-5/6'>
         <div className='w-5/6 md:w-4/6 p-6 mx-auto bg-white rounded-lg shadow-2xl'>
           <h2 className='text-2xl text-zinc-900'>{t('settings.title')}</h2>
