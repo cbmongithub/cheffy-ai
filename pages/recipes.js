@@ -7,7 +7,7 @@ import Link from 'next/link'
 import Sidebar from '@/components/Sidebar'
 import Recipe from '@/components/Recipe'
 
-const Recipes = () => {
+const Recipes = (props) => {
   const { data: session } = useSession()
   const [allRecipes, setAllRecipes] = useState('')
   const router = useRouter()
@@ -51,7 +51,9 @@ const Recipes = () => {
               return (
                 <Recipe
                   key={i}
+                  language={props._nextI18Next.initialLocale}
                   recipe={t('recipes.recipe')}
+                  ago={t('recipes.ago')}
                   timestamp={recipe.timestamp}
                   title={recipe.title}
                   description={recipe.description}

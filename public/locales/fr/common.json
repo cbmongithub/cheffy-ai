@@ -39,6 +39,7 @@
   },
   "recipes": {
     "recipe": "Recette",
+    "ago": "il y a",
     "view-recipe": "Voir la recette",
     "show-less": "Montrer moins",
     "ingredients": "Ingrédients",
