@@ -4,7 +4,6 @@ import { useRouter } from 'next/router'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
 import Sidebar from '@/components/Sidebar'
-import { countryOptions, languageOptions } from '@/constants'
 
 const Settings = () => {
   const { data: session } = useSession()
@@ -165,9 +164,11 @@ const Settings = () => {
                     value={user.country}
                     className='block appearance-none text-zinc-500 w-full bg-white border border-zinc-400 shadow-inner px-4 py-2 pr-8 rounded'
                   >
-                    {countryOptions.map((option, index) => {
-                      return <option key={index}>{option}</option>
-                    })}
+                    {t('signUp.countries', { returnObjects: true }).map(
+                      (country, index) => {
+                        return <option key={index}>{country}</option>
+                      }
+                    )}
                   </select>
                   <div className='pointer-events-none absolute top-0 mt-3  right-0 flex items-center px-2 text-zinc-600'>
                     <svg
@@ -190,9 +191,11 @@ const Settings = () => {
                     value={user.language}
                     className='block appearance-none text-zinc-500 w-full bg-white border border-zinc-400 shadow-inner px-4 py-2 pr-8 rounded'
                   >
-                    {languageOptions.map((option, index) => {
-                      return <option key={index}>{option}</option>
-                    })}
+                    {t('signUp.languages', { returnObjects: true }).map(
+                      (language, index) => {
+                        return <option key={index}>{language}</option>
+                      }
+                    )}
                   </select>
                   <div className='pointer-events-none absolute top-0 mt-3  right-0 flex items-center px-2 text-zinc-600'>
                     <svg
