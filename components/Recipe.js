@@ -29,7 +29,6 @@ const Recipe = ({
   useEffect(() => {
     const loadLocale = async (data) => {
       const loadedLocale = await locales[data]()
-      console.log(`${data} loaded!`)
       return loadedLocale
     }
     loadLocale(language)

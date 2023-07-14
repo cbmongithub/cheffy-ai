@@ -23,7 +23,6 @@ const Chat = (props) => {
 
   useEffect(() => {
     !session ? router.push('/login') : session
-    console.log(session)
   })
 
   const generateResponse = async (newQuestion, setNewQuestion) => {
