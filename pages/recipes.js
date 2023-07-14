@@ -50,7 +50,7 @@ const Recipes = (props) => {
             allRecipes.map((recipe, i) => {
               return (
                 <Recipe
-                  key={i}
+                  key={recipe.timestamp}
                   language={props._nextI18Next.initialLocale}
                   recipe={t('recipes.recipe')}
                   ago={t('recipes.ago')}
