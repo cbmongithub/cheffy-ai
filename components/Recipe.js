@@ -33,7 +33,9 @@ const Recipe = ({
     }
     loadLocale(language)
       .then(() => dayjs.locale(language))
-      .catch(console.error)
+      .catch((err) => {
+        console.log(err)
+      })
   })
   return (
     <article className='p-6 bg-white rounded-lg shadow-2xl dark:bg-slate-800'>
