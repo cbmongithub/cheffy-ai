@@ -4,7 +4,6 @@ import { useTranslation } from 'next-i18next'
 import Image from 'next/image'
 import Link from 'next/link'
 import backgroundPattern from '../public/vegetablepattern.jpg'
-import { countryOptions, languageOptions } from '@/constants'
 
 const Signup = () => {
   const { t } = useTranslation('common')
@@ -171,13 +170,11 @@ const Signup = () => {
                       value={data.country}
                       className='block appearance-none text-zinc-500 w-full bg-white border border-zinc-400 shadow-inner px-4 py-2 pr-8 rounded'
                     >
-                      {countryOptions.map((option, index) => {
-                        return (
-                          <option value={option} key={index}>
-                            {option}
-                          </option>
-                        )
-                      })}
+                      {t('signUp.countries', { returnObjects: true }).map(
+                        (country, index) => {
+                          return <option key={index}>{country}</option>
+                        }
+                      )}
                     </select>
                     <div className='pointer-events-none absolute top-0 mt-3  right-0 flex items-center px-2 text-zinc-600'>
                       <svg
@@ -201,13 +198,11 @@ const Signup = () => {
                       value={data.language}
                       className='block appearance-none text-zinc-500 w-full bg-white border border-zinc-400 shadow-inner px-4 py-2 pr-8 rounded'
                     >
-                      {languageOptions.map((option, index) => {
-                        return (
-                          <option value={option} key={index}>
-                            {option}
-                          </option>
-                        )
-                      })}
+                      {t('signUp.languages', { returnObjects: true }).map(
+                        (language, index) => {
+                          return <option key={index}>{language}</option>
+                        }
+                      )}
                     </select>
                     <div className='pointer-events-none absolute top-0 mt-3  right-0 flex items-center px-2 text-zinc-600'>
                       <svg
