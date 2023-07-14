@@ -22,17 +22,14 @@ const Settings = () => {
 
   const handleInputChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value })
-    console.log(user)
   }
 
   const handleCountryChange = (e) => {
     setUser({ ...user, country: e.target.value })
-    console.log(user)
   }
 
   const handleLanguageChange = (e) => {
     setUser({ ...user, language: e.target.value })
-    console.log(user)
   }
 
   const getUser = async (email) => {
@@ -79,8 +76,7 @@ const Settings = () => {
 
   useEffect(() => {
     if (!session) {
-      //router.push('/login')
-      console.log(session)
+      router.push('/login')
     } else {
       getUser(session.user.email)
     }
@@ -151,7 +147,7 @@ const Settings = () => {
                     type='password'
                     name='password'
                     placeholder='••••••••'
-                    value={user.password}
+                    value={user.password ? user.password : ''}
                     onChange={handleInputChange}
                   />
                 </div>
