@@ -1,15 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Image from 'next/image'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 dayjs.extend(relativeTime)
-
-const locales = {
-  de: () => import('dayjs/locale/de'),
-  en: () => import('dayjs/locale/en'),
-  es: () => import('dayjs/locale/es'),
-  fr: () => import('dayjs/locale/fr'),
-}
 
 const Recipe = ({
   language,
@@ -26,17 +19,9 @@ const Recipe = ({
   showLess,
 }) => {
   const [showRecipe, setShowRecipe] = useState(false)
-  useEffect(() => {
-    const loadLocale = async (data) => {
-      const loadedLocale = await locales[data]()
-      return loadedLocale
-    }
-    loadLocale(language)
-      .then(() => dayjs.locale(language))
-      .catch((err) => {
-        console.log(err)
-      })
-  })
+
+  dayjs.locale(language)
+
   return (
     <article className='p-6 bg-white rounded-lg shadow-2xl dark:bg-slate-800'>
       <div className='flex justify-between items-center mb-5'>
