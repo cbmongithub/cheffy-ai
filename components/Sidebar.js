@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { signOut } from 'next-auth/react'
-import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { BiFoodMenu, BiLogOut } from 'react-icons/bi'
@@ -9,7 +8,6 @@ import { BsChatDots } from 'react-icons/bs'
 
 const Sidebar = ({ chat, recipes, settings, logout }) => {
   const [show, setShow] = useState(false)
-  const { data: session } = useSession()
   return (
     <>
       <nav
@@ -144,9 +142,7 @@ const Sidebar = ({ chat, recipes, settings, logout }) => {
               <Link
                 href='/'
                 onClick={() => {
-                  signOut({
-                    callbackUrl: '/',
-                  })
+                  signOut()
                   localStorage.clear()
                 }}
                 className='flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700'

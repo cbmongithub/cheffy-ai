@@ -65,6 +65,14 @@ export const authOptions = {
         return false
       }
     },
+    async redirect({ url, baseUrl }) {
+      if (url.includes('/login')) {
+        return `${baseUrl}/chat`
+      } else if (new URL(url).origin === baseUrl) {
+        return url
+      }
+      return baseUrl
+    },
   },
 }
 

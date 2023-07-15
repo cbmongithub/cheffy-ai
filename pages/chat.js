@@ -18,6 +18,7 @@ const locales = {
 
 const Chat = (props) => {
   const { data: session, status } = useSession()
+  const [loading, setLoading] = useState(false)
   const [typing, setIsTyping] = useState(false)
   const [storedValues, setStoredValues] = useLocalStorage('chat', [])
   const [newQuestion, setNewQuestion] = useState('')
@@ -35,14 +36,21 @@ const Chat = (props) => {
   }, [props._nextI18Next.initialLocale])
 
   useEffect(() => {
-    status !== 'authenticated' && router.push('/login')
-    loadLocale()
-      .then((locale) => {
-        dayjs.locale(locale)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+    if (status === 'loading') {
+      setLoading(true)
+    } else if (status === 'unauthenticated') {
+      setLoading(false)
+      router.push('/login')
+    } else if (status === 'authenticated') {
+      setLoading(false)
+      loadLocale()
+        .then((locale) => {
+          dayjs.locale(locale)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
   }, [status, router, loadLocale])
 
   const generateResponse = async (newQuestion, setNewQuestion) => {
@@ -101,59 +109,63 @@ const Chat = (props) => {
         logout={t('sideMenu.logout')}
       />
       <div className='flex flex-row md:w-4/6 lg:w-5/6 h-[87%] md:h-[92%] absolute top-0 right-0 mx-auto shadow-2xl'>
-        <ScrollableFeed className='mt-[89px] md:mt-0 md:pb-0'>
-          <div className='flex flex-row justify-between rounded-b-md md:mt-0'>
-            <div className='px-4 flex flex-col justify-between'>
-              <div className='flex flex-col mt-5'>
-                <div className='flex justify-start mb-4'>
-                  <div className='py-3 px-4 bg-purple rounded-lg text-white'>
-                    <p className='text-md'>
-                      {t('chat.greeting')}
-                      {session && session.user.name
-                        ? `, ${session.user.name
-                            .split(' ')
-                            .slice(0, -1)
-                            .join(' ')}`
-                        : session && session.user.fullName
-                        ? `, ${session.user.fullName
-                            .split(' ')
-                            .slice(0, -1)
-                            .join(' ')}`
-                        : ''}
-                      ?
-                    </p>
+        {loading ? (
+          'Loading...'
+        ) : (
+          <ScrollableFeed className='mt-[89px] md:mt-0 md:pb-0'>
+            <div className='flex flex-row justify-between rounded-b-md md:mt-0'>
+              <div className='px-4 flex flex-col justify-between'>
+                <div className='flex flex-col mt-5'>
+                  <div className='flex justify-start mb-4'>
+                    <div className='py-3 px-4 bg-purple rounded-lg text-white'>
+                      <p className='text-md'>
+                        {t('chat.greeting')}
+                        {session && session.user.name
+                          ? `, ${session.user.name
+                              .split(' ')
+                              .slice(0, -1)
+                              .join(' ')}`
+                          : session && session.user.fullName
+                          ? `, ${session.user.fullName
+                              .split(' ')
+                              .slice(0, -1)
+                              .join(' ')}`
+                          : ''}
+                        ?
+                      </p>
+                    </div>
+                    <Image
+                      src={`${process.env.NEXT_PUBLIC_BASE_URL}/cheffyIcon.svg`}
+                      className='h-12 w-12'
+                      alt='Cheffy Icon'
+                      width={100}
+                      height={100}
+                    />
                   </div>
-                  <Image
-                    src={`${process.env.NEXT_PUBLIC_BASE_URL}/cheffyIcon.svg`}
-                    className='h-12 w-12'
-                    alt='Cheffy Icon'
-                    width={100}
-                    height={100}
-                  />
                 </div>
+                {storedValues.length > 0 && (
+                  <AnswerSection storedValues={storedValues} />
+                )}
+                {typing && (
+                  <div className='typing-indicator'>
+                    <div className='typing-indicator-bubble'>
+                      <div className='typing-indicator-dot'></div>
+                      <div className='typing-indicator-dot'></div>
+                      <div className='typing-indicator-dot'></div>
+                    </div>
+                    <Image
+                      src={`${process.env.NEXT_PUBLIC_BASE_URL}/cheffyIcon.svg`}
+                      className='h-12 w-12 m-1'
+                      alt='Cheffy Icon'
+                      width={100}
+                      height={100}
+                    />
+                  </div>
+                )}
               </div>
-              {storedValues.length > 0 && (
-                <AnswerSection storedValues={storedValues} />
-              )}
-              {typing && (
-                <div className='typing-indicator'>
-                  <div className='typing-indicator-bubble'>
-                    <div className='typing-indicator-dot'></div>
-                    <div className='typing-indicator-dot'></div>
-                    <div className='typing-indicator-dot'></div>
-                  </div>
-                  <Image
-                    src={`${process.env.NEXT_PUBLIC_BASE_URL}/cheffyIcon.svg`}
-                    className='h-12 w-12 m-1'
-                    alt='Cheffy Icon'
-                    width={100}
-                    height={100}
-                  />
-                </div>
-              )}
             </div>
-          </div>
-        </ScrollableFeed>
+          </ScrollableFeed>
+        )}
       </div>
       <form
         onSubmit={handleSubmit}
