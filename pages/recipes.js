@@ -8,7 +8,7 @@ import Sidebar from '@/components/Sidebar'
 import Recipe from '@/components/Recipe'
 
 const Recipes = (props) => {
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
   const [allRecipes, setAllRecipes] = useState('')
   const router = useRouter()
   const { t } = useTranslation('common')
@@ -29,12 +29,12 @@ const Recipes = (props) => {
   }
 
   useEffect(() => {
-    if (!session) {
+    if (status !== 'authenticated') {
       router.push('/login')
     } else {
       getRecipes(session.user.email)
     }
-  }, [router, session])
+  }, [status, router, session])
 
   return (
     <>

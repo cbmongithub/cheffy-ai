@@ -49,15 +49,21 @@ export const authOptions = {
     maxAge: 30 * 24 * 60 * 60, // 30 days
   },
   callbacks: {
-    jwt: async ({ token, user }) => {
+    async jwt({ token, user }) {
       user && (token.user = user)
       return token
     },
-    session: async ({ session, token }) => {
+    async session({ session, token }) {
       const user = token.user
       session.user = user
-
       return session
+    },
+    async signIn({ user }) {
+      if (user.name || user.fullName) {
+        return true
+      } else {
+        return false
+      }
     },
   },
 }

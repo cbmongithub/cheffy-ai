@@ -6,7 +6,7 @@ import { useTranslation } from 'next-i18next'
 import Sidebar from '@/components/Sidebar'
 
 const Settings = () => {
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
   const [user, setUser] = useState({
     fullName: '',
     email: '',
@@ -74,12 +74,12 @@ const Settings = () => {
   }
 
   useEffect(() => {
-    if (!session) {
+    if (status !== 'authenticated') {
       router.push('/login')
     } else {
       getUser(session.user.email)
     }
-  }, [router, session])
+  }, [status, router, session])
 
   return (
     <>

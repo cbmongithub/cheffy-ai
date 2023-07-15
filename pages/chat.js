@@ -17,7 +17,7 @@ const locales = {
 }
 
 const Chat = (props) => {
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
   const [typing, setIsTyping] = useState(false)
   const [storedValues, setStoredValues] = useLocalStorage('chat', [])
   const [newQuestion, setNewQuestion] = useState('')
@@ -35,7 +35,7 @@ const Chat = (props) => {
   }, [props._nextI18Next.initialLocale])
 
   useEffect(() => {
-    !session ? router.push('/login') : session
+    status !== 'authenticated' && router.push('/login')
     loadLocale()
       .then((locale) => {
         dayjs.locale(locale)
@@ -43,7 +43,7 @@ const Chat = (props) => {
       .catch((err) => {
         console.log(err)
       })
-  }, [session, router, loadLocale])
+  }, [status, router, loadLocale])
 
   const generateResponse = async (newQuestion, setNewQuestion) => {
     setIsTyping(true)
