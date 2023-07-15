@@ -45,7 +45,7 @@ const signUpHandler = async (req, res) => {
         })
     }
   } else {
-    res.status(405).json({ error: 'Method Not Allowed' })
+    res.status(401).json('Unauthorized')
   }
 }
 
