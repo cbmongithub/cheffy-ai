@@ -25,20 +25,27 @@ export const authOptions = {
       },
       async authorize(credentials, req) {
         const { email, password } = req.body
-        try {
-          await connectToMongoDb().catch((err) => {
-            throw new Error(err)
-          })
 
-          const user = await User.findOne({
-            email: email,
-            password: password,
-          })
+        await connectToMongoDb().catch((err) => {
+          throw new Error(err)
+        })
 
-          return user
-        } catch (error) {
-          console.log(error)
+        const user = await User.findOne({
+          email: email,
+        }).select('fullName email password language country recipes')
+
+        if (!user) {
+          return null
         }
+
+        const isPasswordValid = await compare(password, user.password)
+
+        if (!isPasswordValid) {
+          console.log('Invalid Password.')
+          return null
+        }
+
+        return user
       },
     }),
   ],

@@ -1,5 +1,6 @@
 import connectToMongoDb from '@/lib/mongodb'
 import User from '@/models/user'
+import { hash } from 'bcryptjs'
 
 const signUpHandler = async (req, res) => {
   connectToMongoDb().catch((err) => res.json(err))
@@ -19,10 +20,12 @@ const signUpHandler = async (req, res) => {
         .json({ error: 'Password should be 6 characters long' })
     }
 
+    const hashedPassword = await hash(password, 10)
+
     User.create({
       fullName,
       email,
-      password,
+      password: hashedPassword,
       language,
       country,
     })
