@@ -41,7 +41,6 @@ export const authOptions = {
         const isPasswordValid = await compare(password, user.password)
 
         if (!isPasswordValid) {
-          console.log('Invalid Password.')
           return null
         }
 

@@ -31,7 +31,7 @@ const Login = () => {
       setLoading(true)
       const loginRes = await loginUser(email, password)
       if (loginRes && !loginRes.ok) {
-        setSubmitError(loginRes.error || '')
+        setSubmitError('Invalid Email or Password')
       } else {
         router.push('/chat')
       }
