@@ -10,6 +10,7 @@ import Recipe from '@/components/Recipe'
 const Recipes = (props) => {
   const { data: session, status } = useSession()
   const [allRecipes, setAllRecipes] = useState('')
+  const [loading, setLoading] = useState(false)
   const router = useRouter()
   const { t } = useTranslation('common')
 
@@ -26,12 +27,14 @@ const Recipes = (props) => {
 
     let recipes = await response.json()
     setAllRecipes(recipes.recipes)
+    setLoading(false)
   }
 
   useEffect(() => {
     if (status !== 'authenticated') {
       router.push('/login')
     } else {
+      setLoading(true)
       getRecipes(session.user.email)
     }
   }, [status, router, session])
@@ -46,8 +49,10 @@ const Recipes = (props) => {
       />
       <div className='mt-[100px] md:mt-0 w-full md:w-4/6 lg:w-5/6 absolute top-0 right-0 mx-auto px-12 py-16'>
         <div className='grid gap-12 lg:grid-cols-1'>
-          {allRecipes.length !== 0 ? (
-            allRecipes.map((recipe, i) => {
+          {loading ? (
+            ''
+          ) : allRecipes.length !== 0 ? (
+            allRecipes.map((recipe) => {
               return (
                 <Recipe
                   key={recipe.timestamp}

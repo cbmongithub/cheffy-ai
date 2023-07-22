@@ -9,7 +9,7 @@ const getUser = async (req, res) => {
     connectToMongoDb().catch((err) => res.json(err))
     const { email } = req.body
     const user = await User.findOne({ email: email })
-      .select('fullName email password language country recipes')
+      .select('fullName email password language country')
       .then((user) => {
         return res.status(201).json(user)
       })

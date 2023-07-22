@@ -9,6 +9,7 @@ const getRecipes = async (req, res) => {
     connectToMongoDb().catch((err) => res.json(err))
     const { email } = req.body
     const user = await User.findOne({ email: email })
+      .select('recipes')
       .then((user) => {
         return res.status(201).json(user)
       })
