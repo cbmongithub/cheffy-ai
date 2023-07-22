@@ -1,5 +1,6 @@
 import connectToMongoDb from '@/lib/mongodb'
 import User from '@/models/user'
+import { hash } from 'bcryptjs'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from './auth/[...nextauth]'
 
@@ -9,10 +10,12 @@ const updateUser = async (req, res) => {
     connectToMongoDb().catch((err) => res.json(err))
     const { email, fullName, password, country, language } = req.body
 
+    const hashedPassword = await hash(password, 10)
+
     const updatedUser = {
       email: email,
       fullName: fullName,
-      password: password,
+      password: hashedPassword,
       country: country,
       language: language,
     }
