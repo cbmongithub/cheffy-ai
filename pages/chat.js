@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect } from 'react'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
 import { useSession } from 'next-auth/react'
+import { motion } from 'framer-motion'
 import dayjs from 'dayjs'
 import { useRouter } from 'next/router'
 import Sidebar from '@/components/Sidebar'
@@ -143,7 +144,7 @@ const Chat = (props) => {
                     />
                   </div>
                 </div>
-                {storedValues.length > 0 && (
+                {storedValues.length !== 0 && (
                   <AnswerSection storedValues={storedValues} />
                 )}
                 {typing && (
@@ -234,11 +235,25 @@ const AnswerSection = ({ storedValues }) => {
     <>
       {storedValues !== undefined &&
         storedValues
-          .map((data, index) => {
+          .map((data, i) => {
             const answerString = JSON.stringify(data.answer)
             const answer = JSON.parse(answerString)
             return (
-              <div key={index}>
+              <motion.div
+                key={i}
+                initial={{
+                  opacity: 0,
+                  translateY: -100,
+                }}
+                className='my-3'
+                whileInView={{ opacity: 1, translateY: 0 }}
+                transition={{
+                  type: 'spring',
+                  stiffness: 100,
+                  duration: 1.5,
+                  delay: 0.25 * i,
+                }}
+              >
                 <div className='flex justify-start mb-4'>
                   <div className='py-3 px-4 bg-slate-400 dark:bg-slate-600 rounded-lg text-zinc-50'>
                     <p className='text-md'>{data.question}</p>
@@ -281,7 +296,7 @@ const AnswerSection = ({ storedValues }) => {
                     height={100}
                   />
                 </div>
-              </div>
+              </motion.div>
             )
           })
           .reverse()}
