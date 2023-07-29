@@ -28,7 +28,7 @@ const chatGpt = async (req, res) => {
           If the user asks a question for anything other than a recipe, tell them that you can only assist them with food recipes only.
           Give the user step by step instructions on how to make the meal.
           Respond with the users language in ${language}.
-          Give your response in this JSON format only, and respond with absolutely nothing else:
+          If the user asks for any recipe, give your response in this JSON format only, and respond with absolutely nothing else:
           {
           recipeTitle: recipe title translated to ${language},
           recipeDescription: recipe description translated to ${language},
